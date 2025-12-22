@@ -3,7 +3,10 @@
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-  configs = { hypr = "hypr"; };
+  configs = {
+    hypr = "hypr";
+    zellij = "zellij";
+  };
 
 in {
   home.username = "kreejzak";
@@ -32,5 +35,5 @@ in {
 
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ brave nerd-fonts.comic-shanns-mono ];
+  home.packages = with pkgs; [ brave nerd-fonts.comic-shanns-mono zellij ];
 }

@@ -1,0 +1,15 @@
+themes {
+	wallust {
+		bg "#111316"
+		fg "#F2EDD5"
+		red "#9A6C45"
+		green "#817C46"
+		blue "#9E9384"
+		yellow "#859CA5"
+		magenta "#C1C8BF"
+		orange "#DBCB88"
+		cyan "#E4DDBB"
+		black "#111316"
+		white "#F2EDD5"
+	}
+}
