@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -57,7 +57,6 @@
       "docker"
     ];
     shell = pkgs.zsh;
-    packages = with pkgs; [ ];
   };
 
   nixpkgs.config.allowUnfree = true;

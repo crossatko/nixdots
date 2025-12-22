@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -16,53 +15,75 @@ let
 
 in
 {
-  home.username = "kreejzak";
-  home.homeDirectory = "/home/kreejzak";
+  home = {
+    username = "kreejzak";
+    homeDirectory = "/home/kreejzak";
 
-  home.sessionPath = [
-    "$HOME/.local/bin"
-  ];
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
 
-  home.stateVersion = "25.11";
+    stateVersion = "25.11";
+
+    packages = with pkgs; [
+      brave
+      nerd-fonts.comic-shanns-mono
+      zellij
+      wl-clipboard
+      gnumake
+      gcc
+      binutils
+      desktop-file-utils
+      btop
+      mpv
+      swappy
+      imv
+      pavucontrol
+      networkmanagerapplet
+      yazi
+    ];
+  };
 
   imports = [
     ./modules/home/nvim.nix
     ./modules/home/kitty.nix
   ];
 
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "Paul Cross";
-      email = "me@paulcross.cz";
-    };
-  };
-
-  programs.home-manager.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    oh-my-zsh = {
+  programs = {
+    git = {
       enable = true;
-      plugins = [
-        "git"
-        "sudo"
-      ];
+      settings.user = {
+        name = "Paul Cross";
+        email = "me@paulcross.cz";
+      };
     };
 
-    shellAliases = {
-      rb = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
-    };
-  };
+    home-manager.enable = true;
 
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      oh-my-zsh = {
+        enable = true;
+        plugins = [
+          "git"
+          "sudo"
+        ];
+      };
+
+      shellAliases = {
+        rb = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
+      };
+    };
+
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = true;
+      };
     };
   };
 
@@ -72,22 +93,4 @@ in
   }) configs;
 
   fonts.fontconfig.enable = true;
-
-  home.packages = with pkgs; [
-    brave
-    nerd-fonts.comic-shanns-mono
-    zellij
-    wl-clipboard
-    gnumake
-    gcc
-    binutils
-    desktop-file-utils
-    btop
-    mpv
-    swappy
-    imv
-    pavucontrol
-    networkmanagerapplet
-    yazi
-  ];
 }
