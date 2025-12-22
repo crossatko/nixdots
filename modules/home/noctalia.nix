@@ -9,7 +9,7 @@
       bar = {
         density = "default";
         position = "top";
-        outerCorners = true;
+        outerCorners = false;
         widgets = { animationDisabled = true; };
       };
     };
