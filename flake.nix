@@ -10,6 +10,7 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland?submodules=1";
+    hyprlauncher.url = "github:hyprwm/hyprlauncher";
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -22,8 +23,8 @@
     };
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, hyprland, nixvim, noctalia, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, nixvim, noctalia
+    , hyprlauncher, ... }@inputs: {
       nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };

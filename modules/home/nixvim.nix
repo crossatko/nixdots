@@ -22,7 +22,6 @@
       undofile = true;
       signcolumn = "yes";
       clipboard = "unnamedplus";
-
     };
 
     clipboard.providers.wl-copy.enable = true;
