@@ -77,5 +77,13 @@ in
     gnumake
     gcc
     binutils
+    desktop-file-utils
+    btop
+    mpv
+    swappy
+    imv
+    pavucontrol
+    networkmanagerapplet
+    yazi
   ];
 }

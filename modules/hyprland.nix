@@ -22,6 +22,9 @@ in
   environment.systemPackages = with pkgs; [
     kitty
     tofi
+    hyprpaper
+    xdg-desktop-portal-hyprland
+    hyprsunset
   ];
 
   nix.settings = {
