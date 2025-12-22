@@ -34,6 +34,7 @@
         modules = [
           ./hosts/CrossBattlestation/configuration.nix
           ./modules/hyprland.nix
+          ./modules/gaming.nix
 
           home-manager.nixosModules.home-manager
           {
