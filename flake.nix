@@ -10,11 +10,6 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland?submodules=1";
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -23,7 +18,6 @@
       nixpkgs,
       home-manager,
       hyprland,
-      nixvim,
       ...
     }@inputs:
     {

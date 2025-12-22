@@ -11,6 +11,7 @@ let
   configs = {
     hypr = "hypr";
     zellij = "zellij";
+    nvim = "nvim";
   };
 
 in
@@ -18,10 +19,14 @@ in
   home.username = "kreejzak";
   home.homeDirectory = "/home/kreejzak";
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   home.stateVersion = "25.11";
 
   imports = [
-    ./modules/home/nixvim.nix
+    ./modules/home/nvim.nix
     ./modules/home/kitty.nix
   ];
 
