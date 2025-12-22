@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -13,6 +10,10 @@
 
   networking.hostName = "CrossBattlestation"; # Define your hostname.
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth.enable = true;
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
 
   time.timeZone = "Europe/Prague";
 
@@ -39,16 +40,12 @@
     isNormalUser = true;
     description = "Paul Cross";
     extraGroups = [ "networkmanager" "wheel" "render" "video" "docker" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    vim 
-    wget
-    git   
-  ];
+  environment.systemPackages = with pkgs; [ vim wget git ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

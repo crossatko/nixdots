@@ -14,7 +14,11 @@ in {
 
   home.stateVersion = "25.11";
 
-  imports = [ ./modules/home/nixvim.nix ./modules/home/kitty.nix ];
+  imports = [
+    ./modules/home/noctalia.nix
+    ./modules/home/nixvim.nix
+    ./modules/home/kitty.nix
+  ];
 
   programs.git = {
     enable = true;

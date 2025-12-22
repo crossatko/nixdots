@@ -14,20 +14,16 @@
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      hyprland,
-      nixvim,
-      ...
-    }@inputs:
-    {
+    { self, nixpkgs, home-manager, hyprland, nixvim, noctalia, ... }@inputs: {
       nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
