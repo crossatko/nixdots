@@ -45,7 +45,16 @@
 
   environment.systemPackages = with pkgs; [ vim wget git ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    auto-optimise-store = true;
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
