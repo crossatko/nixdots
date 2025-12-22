@@ -5,12 +5,12 @@ let
   session = "${pkgs.hyprland}/bin/Hyprland";
   username = "kreejzak";
 
-in {
+in
+{
   programs.hyprland = {
     enable = true;
 
-    package =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
@@ -19,13 +19,15 @@ in {
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  environment.systemPackages = with pkgs; [ kitty tofi ];
+  environment.systemPackages = with pkgs; [
+    kitty
+    tofi
+  ];
 
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
     trusted-substituters = [ "https://hyprland.cachix.org" ];
-    trusted-public-keys =
-      [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
 
   services.greetd = {
@@ -37,8 +39,7 @@ in {
         user = "${username}";
       };
       default_session = {
-        command =
-          "${tuigreet} --asterisks --remember --remember-user-session --time -cmd ${session}";
+        command = "${tuigreet} --asterisks --remember --remember-user-session --time -cmd ${session}";
         user = "greeter";
       };
     };
