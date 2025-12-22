@@ -54,6 +54,8 @@
 
       lazygit.enable = true;
 
+      refactoring.enable = true;
+
       fzf-lua = {
         enable = true;
         profile = "fzf-native";
@@ -76,8 +78,7 @@
             "<C-l>" = "cmp.mapping.complete()";
             "<C-e>" = "cmp.mapping.close()";
             "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-            "<S-Tab>" =
-              "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
             "<CR>" = "cmp.mapping.confirm({select = true})";
           };
 
@@ -106,14 +107,12 @@
           nixd = {
             enable = true;
             settings = {
+              formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
               nixpkgs = {
-                expr =
-                  "import (buildins.getFlake (toString ./.)).inputs.nixpkgs { }";
+                expr = "import (buildins.getFlake (toString ./.)).inputs.nixpkgs { }";
               };
-              nixos.expr =
-                "(buildins.getFlake (toString ./.)).nixosConfigurations.CrossBattlestation.options";
-              home-manager.expr =
-                "(buildins.getFlake (toString ./.)).nixosConfigurations.CrossBattlestation.options.home-manager.users.type.getSubOptions []";
+              nixos.expr = "(buildins.getFlake (toString ./.)).nixosConfigurations.CrossBattlestation.options";
+              home-manager.expr = "(buildins.getFlake (toString ./.)).nixosConfigurations.CrossBattlestation.options.home-manager.users.type.getSubOptions []";
 
             };
           };
@@ -125,6 +124,7 @@
       none-ls = {
         enable = true;
         sources.formatting.nixfmt.enable = true;
+        sources.code_actions.statix.enable = true;
       };
     };
 
@@ -139,7 +139,10 @@
         };
       }
       {
-        mode = [ "n" "v" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "<leader>ca";
         action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
         options = {
@@ -192,12 +195,19 @@
       }
     ];
 
-    autoCmd = [{
-      event = "BufWritePre";
-      pattern = "*.*";
-      command = "lua vim.lsp.buf.format()";
-    }];
+    autoCmd = [
+      {
+        event = "BufWritePre";
+        pattern = "*.*";
+        command = "lua vim.lsp.buf.format()";
+      }
+    ];
   };
 
-  home.packages = with pkgs; [ fzf ripgrep fd lazygit ];
+  home.packages = with pkgs; [
+    fzf
+    ripgrep
+    fd
+    lazygit
+  ];
 }
