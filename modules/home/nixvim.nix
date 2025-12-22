@@ -50,6 +50,8 @@
 
       web-devicons.enable = true;
 
+      lazygit.enable = true;
+
       fzf-lua = {
         enable = true;
         profile = "fzf-native";
@@ -126,6 +128,15 @@
 
     keymaps = [
       {
+        mode = "n";
+        key = "<leader>gg";
+        action = "<cmd>LazyGit<CR>";
+        options = {
+          silent = true;
+          desc = "LazyGit (Root Dir)";
+        };
+      }
+      {
         mode = [ "n" "v" ];
         key = "<leader>ca";
         action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
@@ -186,5 +197,5 @@
     }];
   };
 
-  home.packages = with pkgs; [ fzf ripgrep fd ];
+  home.packages = with pkgs; [ fzf ripgrep fd lazygit ];
 }
