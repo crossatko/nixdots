@@ -26,7 +26,28 @@ in {
 
   programs.home-manager.enable = true;
 
-  programs.bash = { enable = true; };
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "sudo" ];
+    };
+
+    shellAliases = {
+      v = "nvim";
+      rb =
+        "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = { add_newline = true; };
+  };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
