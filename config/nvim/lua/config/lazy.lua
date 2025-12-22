@@ -37,7 +37,6 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
-  install = {},
   checker = {
     enabled = true,
     notify = false,
