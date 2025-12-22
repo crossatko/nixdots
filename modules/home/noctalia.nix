@@ -7,8 +7,10 @@
     enable = true;
     settings = {
       bar = {
-        density = "compact";
+        density = "default";
         position = "top";
+        outerCorners = true;
+        widgets = { animationDisabled = true; };
       };
     };
   };
