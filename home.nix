@@ -39,5 +39,10 @@ in {
 
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ brave nerd-fonts.comic-shanns-mono zellij ];
+  home.packages = with pkgs; [
+    brave
+    nerd-fonts.comic-shanns-mono
+    zellij
+    wl-clipboard
+  ];
 }
