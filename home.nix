@@ -55,7 +55,6 @@ in
     };
 
     shellAliases = {
-      v = "nvim";
       rb = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
     };
   };
