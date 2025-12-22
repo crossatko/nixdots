@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles/config";
@@ -8,13 +13,17 @@ let
     zellij = "zellij";
   };
 
-in {
+in
+{
   home.username = "kreejzak";
   home.homeDirectory = "/home/kreejzak";
 
   home.stateVersion = "25.11";
 
-  imports = [ ./modules/home/nixvim.nix ./modules/home/kitty.nix ];
+  imports = [
+    ./modules/home/nixvim.nix
+    ./modules/home/kitty.nix
+  ];
 
   programs.git = {
     enable = true;
@@ -34,19 +43,23 @@ in {
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" ];
+      plugins = [
+        "git"
+        "sudo"
+      ];
     };
 
     shellAliases = {
       v = "nvim";
-      rb =
-        "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
+      rb = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
     };
   };
 
   programs.starship = {
     enable = true;
-    settings = { add_newline = true; };
+    settings = {
+      add_newline = true;
+    };
   };
 
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -61,5 +74,8 @@ in {
     nerd-fonts.comic-shanns-mono
     zellij
     wl-clipboard
+    gnumake
+    gcc
+    binutils
   ];
 }

@@ -37,21 +37,43 @@
 
   programs.zsh.enable = true;
 
+  virtualisation.docker = {
+    enable = true;
+
+    autoPrune = {
+      enable = true;
+      dates = "weekly";
+    };
+  };
+
   users.users.kreejzak = {
     isNormalUser = true;
     description = "Paul Cross";
-    extraGroups = [ "networkmanager" "wheel" "render" "video" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "render"
+      "video"
+      "docker"
+    ];
     shell = pkgs.zsh;
     packages = with pkgs; [ ];
   };
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [ vim wget git ];
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    git
+  ];
 
   nix.settings = {
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   nix.gc = {
@@ -79,6 +101,8 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  system = { stateVersion = "25.11"; };
+  system = {
+    stateVersion = "25.11";
+  };
 
 }
