@@ -19,7 +19,7 @@ in {
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  environment.systemPackages = with pkgs; [ kitty ];
+  environment.systemPackages = with pkgs; [ kitty tofi ];
 
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];

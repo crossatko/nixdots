@@ -10,37 +10,30 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland?submodules=1";
-    hyprlauncher.url = "github:hyprwm/hyprlauncher";
 
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, nixvim, noctalia
-    , hyprlauncher, ... }@inputs: {
-      nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/CrossBattlestation/configuration.nix
-          ./modules/hyprland.nix
+  outputs = { self, nixpkgs, home-manager, hyprland, nixvim, ... }@inputs: {
+    nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./hosts/CrossBattlestation/configuration.nix
+        ./modules/hyprland.nix
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.users.kreejzak = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
-        ];
-      };
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "backup";
+          home-manager.users.kreejzak = import ./home.nix;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+        }
+      ];
     };
+  };
 }
