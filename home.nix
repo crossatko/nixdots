@@ -46,6 +46,10 @@ in
       networkmanagerapplet
       yazi
       fastfetch
+      nautilus
+      gvfs
+      adwaita-icon-theme
+      glib
     ];
   };
 
