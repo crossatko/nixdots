@@ -1,7 +1,6 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }:
 
 let
@@ -13,18 +12,15 @@ let
     zellij = "zellij";
     nvim = "nvim";
   };
-
-
-
 in
 {
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
 
-  sessionPath = [
-    "$HOME/.local/bin"
-  ];
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
 
     stateVersion = "25.11";
 
@@ -57,13 +53,17 @@ in
   programs = {
 
 
-  ssh = {
-    enable = true;
-    extraConfig = ''
-      Host *
-        IdentityAgent ~/.1password/agent.sock 
-    '';
-  };
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks = {
+        "*" = {
+          extraOptions = {
+            IdentityAgent = "~/.1password/agent.sock";
+          };
+        };
+      };
+    };
 
 
     git = {
@@ -78,8 +78,8 @@ in
 
 
     bash = {
-        enable = true;
-      };
+      enable = true;
+    };
 
     zsh = {
       enable = true;
@@ -108,10 +108,12 @@ in
     };
   };
 
-  xdg.configFile = builtins.mapAttrs (name: subpath: {
-    source = create_symlink "${dotfiles}/${subpath}";
-    recursive = true;
-  }) configs;
+  xdg.configFile = builtins.mapAttrs
+    (name: subpath: {
+      source = create_symlink "${dotfiles}/${subpath}";
+      recursive = true;
+    })
+    configs;
 
   fonts.fontconfig.enable = true;
 }

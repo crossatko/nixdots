@@ -20,6 +20,7 @@ return {
       jsx = { "prettier" },
       typescript = { "prettier" },
       yaml = { "prettier" },
+      nix = { "nixpkgs_fmt" },
     },
   },
 }
