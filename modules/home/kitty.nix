@@ -43,7 +43,7 @@
       color14 = "#94e2d5";
       color15 = "#a6adc8";
     };
-    
+
     font.name = "ComicShannsMono Nerd Font";
 
   };

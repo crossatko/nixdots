@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/profiles/qemu-guest.nix")
+    [
+      (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
@@ -14,7 +15,8 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/mapper/luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834";
+    {
+      device = "/dev/mapper/luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
@@ -22,13 +24,15 @@
   boot.initrd.luks.devices."luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834".device = "/dev/disk/by-uuid/17c58fc2-504b-4e8c-a359-b6fb7c24a834";
 
   fileSystems."/home" =
-    { device = "/dev/mapper/luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834";
+    {
+      device = "/dev/mapper/luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4664-892C";
+    {
+      device = "/dev/disk/by-uuid/4664-892C";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };

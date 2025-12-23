@@ -13,12 +13,11 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      hyprland,
-      ...
+    { self
+    , nixpkgs
+    , home-manager
+    , hyprland
+    , ...
     }@inputs:
     {
       nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {

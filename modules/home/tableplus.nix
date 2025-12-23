@@ -1,4 +1,4 @@
-{pkgs, lib, ...}: 
+{ pkgs, lib, ... }:
 
 let
   pname = "tableplus";
@@ -18,7 +18,8 @@ let
     ];
   };
 
-in {
+in
+{
   home.packages = [ tableplus-app ];
 
   xdg.desktopEntries.tableplus = {
