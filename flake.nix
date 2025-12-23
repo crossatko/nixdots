@@ -42,5 +42,26 @@
           }
         ];
       };
+
+      nixosConfigurations.NixVM = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          ./hosts/NixVM/configuration.nix
+          ./modules/hyprland.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users.kreejzak = import ./home.nix;
+              extraSpecialArgs = { inherit inputs; };
+            };
+          }
+        ];
+      };
     };
 }
