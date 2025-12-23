@@ -63,6 +63,7 @@ in
       adwaita-icon-theme
       glib
       waybar
+      tldr
     ];
   };
 
