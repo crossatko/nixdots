@@ -85,6 +85,17 @@ in
       };
     };
 
+    brave = {
+      enable = true;
+      package = pkgs.brave;
+      extensions = [
+        { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; }
+        { id = "nhdogjmejiglipccpnnnanhbledajbpd"; }
+        { id = "jabopobgcpjmedljpbcaablpmlmfcogm"; }
+        { id = "gebbhagfogifgggkldgodflihgfeippi"; }
+        { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; }
+      ];
+    };
 
     git = {
       enable = true;

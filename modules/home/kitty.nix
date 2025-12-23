@@ -10,7 +10,7 @@
 
       # Catppuccin Mocha colors
       foreground = "#cdd6f4";
-      background = "#000000";
+      background = "#000000"; #"#191724";
       selection_foreground = "#1e1e2e";
       selection_background = "#cdd6f4";
       cursor = "#f5e0dc";

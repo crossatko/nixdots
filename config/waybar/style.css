@@ -1,3 +1,4 @@
+@define-color black rgba(0, 0, 0, 0.5);
 @define-color background rgba(25, 23, 36, 0.75);
 @define-color text rgba(224, 222, 244, 0.75);
 @define-color text-transparent rgba(224, 222, 244, 0.2);
@@ -22,8 +23,9 @@ window#waybar {
 
 window#waybar > box {
   padding-bottom: 0;
-  padding: 4px 4px 4px 2px;
-  background: @background;
+  padding: 4px;
+  background: @black;
+  /* background: red; */
   border-radius: 0px;
 }
 
@@ -52,12 +54,13 @@ button:hover {
   color: @text;
   margin: 0 2px;
   min-width: 24px;
-  border-radius: 12px;
-  font-weight: bold;
+  border-radius: 14px;
+  padding: 0px 0px;
 }
 
 #workspaces button label {
   font-size: 12px;
+  font-weight: 900;
 }
 
 #workspaces button:hover {
@@ -85,6 +88,7 @@ button:hover {
 #window {
   color: @text;
   padding-left: 8px;
+  padding-right: 8px;
 }
 
 .modules-right {
