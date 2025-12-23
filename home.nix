@@ -25,6 +25,7 @@ in
     sessionVariables =
       {
         XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+        GTK_THEME = "Adwaita-dark";
       };
 
     stateVersion = "25.11";
@@ -103,7 +104,8 @@ in
       };
 
       shellAliases = {
-        rb = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
+        rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd";
+        rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
       };
     };
 
@@ -122,7 +124,33 @@ in
     })
     configs;
 
-
-
   fonts.fontconfig.enable = true;
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
 }
