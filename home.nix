@@ -39,6 +39,7 @@ in
       gcc
       binutils
       desktop-file-utils
+      thunderbird
       btop
       mpv
       swappy
