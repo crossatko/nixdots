@@ -5,7 +5,7 @@
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
-    pokitPolicyOwners = ["kreejzak"]
+    polkitPolicyOwners = ["kreejzak"];
   };
 
   environment.etc."1password/custom_allowed_browsers".text = ''

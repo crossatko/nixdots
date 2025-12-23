@@ -14,11 +14,17 @@ let
     nvim = "nvim";
   };
 
+
+
 in
 {
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
+
+  sessionPath = [
+    "$HOME/.local/bin"
+  ];
 
     stateVersion = "25.11";
 
@@ -70,10 +76,6 @@ in
 
     home-manager.enable = true;
 
-    _1password = {
-      enable = true;
-      pokitPolicyOwners = ["${user}"];
-    };
 
     bash = {
         enable = true;

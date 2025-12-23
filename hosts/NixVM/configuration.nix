@@ -5,7 +5,7 @@
   ../shared/boot.nix 
   ../shared/language-time.nix
   ../shared/system.nix
-  ../shared/users.nix
+  ../shared/user.nix
   ../shared/programs.nix
 
   ];
