@@ -11,6 +11,8 @@ let
     hypr = "hypr";
     zellij = "zellij";
     nvim = "nvim";
+    tofi = "tofi";
+    waybar = "waybar";
   };
 in
 {
@@ -29,6 +31,14 @@ in
       };
 
     stateVersion = "25.11";
+
+    pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 24;
+    };
 
     packages = with pkgs; [
       brave
@@ -52,6 +62,7 @@ in
       gvfs
       adwaita-icon-theme
       glib
+      waybar
     ];
   };
 
@@ -133,6 +144,10 @@ in
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
+    cursorTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
@@ -143,7 +158,7 @@ in
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
     style.name = "adwaita-dark";
     style.package = pkgs.adwaita-qt;
   };

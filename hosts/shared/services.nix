@@ -13,4 +13,8 @@
   # allow connecting usbs in nautilus
   services.udisks2.enable = true;
 
+  services.dbus.enable = true;
+  services.udev.enable = true;
+
+
 }

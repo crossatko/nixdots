@@ -1,0 +1,259 @@
+@define-color background rgba(25, 23, 36, 0.75);
+@define-color text rgba(224, 222, 244, 0.75);
+@define-color text-transparent rgba(224, 222, 244, 0.2);
+@define-color text-inverse rgba(25, 23, 36, 1);
+@define-color button rgba(25, 23, 36, 0.75);
+@define-color button-hover rgba(224, 222, 244, 0.2);
+@define-color button-active rgba(235, 188, 186, 0.75);
+@define-color button-active-hover rgb(246, 193, 119);
+@define-color info rgb(49, 116, 143);
+@define-color warning #ea9d34;
+@define-color error #eb6f92;
+
+* {
+  font-family: "ComicShannsMono Nerd Font", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+window#waybar {
+  background-color: transparent;
+  color: @text;
+}
+
+window#waybar > box {
+  padding-bottom: 0;
+  padding: 4px 4px 4px 2px;
+  background: @background;
+  border-radius: 0px;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+button {
+  border: none;
+  border-radius: 0px;
+  transition: 0.3s all;
+}
+
+button:hover {
+  border: none;
+  background: inherit;
+}
+
+#workspaces {
+  padding: 0;
+}
+
+#workspaces button {
+  padding: 0px 0px;
+  background-color: @button;
+  color: @text;
+  margin: 0 2px;
+  min-width: 24px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+#workspaces button label {
+  font-size: 12px;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background-color: @button-hover;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  background-color: @button-active;
+  min-width: 40px;
+  color: #191724;
+}
+
+#workspaces button.focused:hover,
+#workspaces button.active:hover {
+  background-color: @button-active-hover;
+}
+
+#workspaces button.urgent {
+  background-color: @error;
+}
+
+#window {
+  color: @text;
+  padding-left: 8px;
+}
+
+.modules-right {
+  padding: 0px;
+}
+
+.modules-center > widget > * {
+  padding: 0px 12px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.modules-right > widget > * {
+  padding: 0px 6px;
+  border-radius: 12px;
+  min-width: 24px;
+  background-color: @button;
+  color: @text;
+  transition: 0.2s all;
+}
+#clock {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#network.disconnected {
+  background-color: @error;
+}
+
+#audio {
+  padding: 0px;
+}
+#audio > widget > * {
+  min-width: 28px;
+  transition: 0.2s all;
+}
+#audio > widget > #custom-headphones {
+  border-radius: 0px 12px 12px 0px;
+  padding: 0px 2px 0px 0px;
+}
+#audio > widget > #pulseaudio {
+  padding: 0 4px 0 6px;
+  min-width: 32px;
+  border-radius: 12px 0 0 12px;
+}
+#pulseaudio:hover {
+  background-color: @button-hover;
+}
+#pulseaudio-slider {
+  padding: 0px 10px 0px 4px;
+}
+#pulseaudio-slider slider {
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  padding: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+#pulseaudio-slider trough {
+  min-height: 2px;
+  min-width: 40px;
+  border-radius: 4px;
+  padding: 0;
+  background-color: @text-transparent;
+  box-shadow: 0px 0px 0px 1px @text-transparent;
+  border: 0px solid @text;
+}
+#pulseaudio-slider highlight {
+  min-width: 4px;
+  min-height: 4px;
+  background-color: @info;
+  box-shadow: none;
+  border: 0px;
+  border-radius: 4px;
+}
+
+#custom-prices,
+#custom-weather {
+  padding: 0 12px;
+}
+#custom-keyboard {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 0 4px;
+}
+
+#custom-keyboard:hover {
+  background-color: @button-hover;
+}
+
+#custom-mic {
+  font-size: 12px;
+  padding: 0;
+  font-family: "Font Awesome 6 Pro Regular";
+}
+#custom-mic:hover {
+  background-color: @button-hover;
+}
+#custom-mic.mic {
+  background-color: @error;
+  color: @text-inverse;
+}
+
+#custom-airpods,
+#custom-headphones,
+#custom-gamepad {
+  font-family: "Font Awesome 6 Pro Regular";
+  font-size: 12px;
+  padding: 0;
+}
+#custom-airpods:hover,
+#custom-headphones:hover,
+#custom-gamepad:hover {
+  background-color: @button-hover;
+}
+#custom-airpods.connected,
+#custom-headphones.connected,
+#custom-gamepad.connected {
+  background-color: @info;
+}
+
+#custom-hyprsunset {
+  font-family: "Font Awesome 6 Pro Regular";
+  font-size: 12px;
+  padding: 0;
+}
+#custom-hyprsunset:hover {
+  background-color: @button-hover;
+}
+#custom-hyprsunset.on {
+  background-color: @warning;
+  color: @text-inverse;
+}
+
+#custom-cputemp.hot {
+  background-color: @error;
+  color: @text;
+}
+
+#custom-cputemp.warm {
+  background-color: @warning;
+  color: @button;
+}
+
+#custom-cputemp.cool {
+  background-color: @info;
+  color: @text;
+}
+#custom-notification {
+  font-size: 15px;
+  padding: 0;
+}
+
+#temperature {
+  background-color: @warning;
+  color: @text;
+}
+#tray {
+  opacity: 0.75;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+  opacity: 0.5;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @button;
+}

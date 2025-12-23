@@ -20,5 +20,9 @@
     wget
     git
     vim
+    killall
+
+    libappindicator-gtk3
+    libdbusmenu-gtk3
   ];
 }
