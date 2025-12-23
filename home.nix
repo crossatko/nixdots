@@ -41,12 +41,14 @@ in
       pavucontrol
       networkmanagerapplet
       yazi
+      fastfetch
     ];
   };
 
   imports = [
     ./modules/home/nvim.nix
     ./modules/home/kitty.nix
+    ./modules/home/tableplus.nix
   ];
 
   programs = {
