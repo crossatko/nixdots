@@ -10,7 +10,7 @@
 
       # Rose Pine Dark colors
       foreground = "#e0def4";
-      background = "#191724";
+      background = "#000000";
       selection_foreground = "#e0def4";
       selection_background = "#26233a";
       cursor = "#e0def4";

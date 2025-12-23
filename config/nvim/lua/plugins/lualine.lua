@@ -15,8 +15,8 @@ return {
         local colors = {
           darkgray = get_hl_color("StatusLineNC", "bg") or "#16161d",
           gray = get_hl_color("Comment", "fg") or "#727169",
-          innerbg = get_hl_color("StatusLine", "bg"),
-          outerbg = get_hl_color("Normal", "bg"),
+          innerbg = "NONE",
+          outerbg = "NONE",
           normal = get_hl_color("Function", "fg"),
           insert = get_hl_color("String", "fg"),
           visual = get_hl_color("Visual", "bg"),
