@@ -9,7 +9,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "CrossBattlestation"; # Define your hostname.
+  networking.hostName = "NixVM"; # Define your hostname.
   networking.networkmanager.enable = true;
 
   hardware.bluetooth.enable = true;
