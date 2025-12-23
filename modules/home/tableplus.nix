@@ -1,6 +1,6 @@
 {pkgs, lib, ...}: 
 
-{
+let
   pname = "tableplus";
   version = "latest";
 
@@ -8,7 +8,7 @@
     inherit pname version;
     src = pkgs.fetchurl {
       url = "https://tableplus.com/release/linux/x64/TablePlus-x64.AppImage";
-      sha256 = lib.fakeHash
+      sha256 = "sha256-YpodFUjku3PUZ31lOy4kEpOJGUI3Smz8SRHUrGoIy2I=";
     };
 
     extraPkgs = pkgs: with pkgs; [
@@ -18,16 +18,15 @@
     ];
   };
 
-  in {
-      home.packages = [ tableplus-app ];
+in {
+  home.packages = [ tableplus-app ];
 
-      xdg.desktopEntries.tableplus = {
-        name = "TablePlus";
-        exec = "${tableplus-app}/bin/${pname}";
-        icon = "${tableplus-app}/share/icons/hicolor/256x256/apps/tableplus.png";
-        type = "Application";
-        categories = [ "Development" "Database" ];
-        mimeType = "application/x-sqlite3;application/vnd.mysql;application/vnd.postgresql;";
-      };
-    }
+  xdg.desktopEntries.tableplus = {
+    name = "TablePlus";
+    exec = "${tableplus-app}/bin/${pname}";
+    icon = "${tableplus-app}/share/icons/hicolor/256x256/apps/tableplus.png";
+    type = "Application";
+    categories = [ "Development" "Database" ];
+  };
 }
+
