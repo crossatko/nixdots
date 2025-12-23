@@ -5,6 +5,7 @@
 }:
 
 let
+  user = "kreejzak";
   dotfiles = "${config.home.homeDirectory}/dotfiles/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
@@ -16,12 +17,8 @@ let
 in
 {
   home = {
-    username = "kreejzak";
-    homeDirectory = "/home/kreejzak";
-
-    sessionPath = [
-      "$HOME/.local/bin"
-    ];
+    username = "${user}";
+    homeDirectory = "/home/${user}";
 
     stateVersion = "25.11";
 
@@ -52,6 +49,17 @@ in
   ];
 
   programs = {
+
+
+  ssh = {
+    enable = true;
+    extraConfig = ''
+      Host *
+        IdentityAgent ~/.1password/agent.sock 
+    '';
+  };
+
+
     git = {
       enable = true;
       settings.user = {
@@ -61,6 +69,15 @@ in
     };
 
     home-manager.enable = true;
+
+    _1password = {
+      enable = true;
+      pokitPolicyOwners = ["${user}"];
+    };
+
+    bash = {
+        enable = true;
+      };
 
     zsh = {
       enable = true;
