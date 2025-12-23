@@ -10,6 +10,7 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland?submodules=1";
+    nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
   };
 
   outputs =
@@ -17,6 +18,7 @@
     , nixpkgs
     , home-manager
     , hyprland
+    , nix-flatpak
     , ...
     }@inputs:
     {
@@ -28,6 +30,7 @@
           ./hosts/CrossBattlestation/configuration.nix
           ./modules/hyprland.nix
           ./modules/gaming.nix
+          ./modules/flatpak.nix
 
           home-manager.nixosModules.home-manager
           {
@@ -49,6 +52,7 @@
         modules = [
           ./hosts/NixVM/configuration.nix
           ./modules/hyprland.nix
+          ./modules/flatpak.nix
 
           home-manager.nixosModules.home-manager
           {

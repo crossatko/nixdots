@@ -22,6 +22,11 @@ in
       "$HOME/.local/bin"
     ];
 
+    sessionVariables =
+      {
+        XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+      };
+
     stateVersion = "25.11";
 
     packages = with pkgs; [
@@ -51,8 +56,6 @@ in
   ];
 
   programs = {
-
-
     ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -114,6 +117,8 @@ in
       recursive = true;
     })
     configs;
+
+
 
   fonts.fontconfig.enable = true;
 }
