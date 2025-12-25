@@ -1,6 +1,6 @@
 [
   {
-    "output": "!DP-2",
+    "output": ["DP-3", "Virtual-1"],
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 24, // Waybar height (to be removed for auto height)
@@ -30,21 +30,5 @@
       "clock",
       "custom/notification",
     ],
-  },
-  {
-    "output": ["DP-2", "!Virtual-1"],
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 32, // Waybar height (to be removed for auto height)
-    "width": 1192, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    "margin-bottom": 0,
-    "margin-top": 4,
-    "margin-left": 4,
-    "margin-right": 4,
-    "include": ["$HOME/.config/waybar/modules.jsonc"],
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["custom/weather", "custom/prices", "tray"],
   },
 ]
