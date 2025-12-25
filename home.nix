@@ -63,7 +63,7 @@ in
       glib
       waybar
       tldr
-      trezor-suite
+      # trezor-suite
     ];
   };
 
@@ -104,6 +104,7 @@ in
         { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return Youtube Dislike
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # SponsorBlock'
         { id = "hkgfoiooedgoejojocmhlaklaeopbecg"; } # PiP
+        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
       ];
     };
 
