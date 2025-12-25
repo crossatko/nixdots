@@ -26,5 +26,6 @@
     libdbusmenu-gtk3
 
     libnotify
+    ddcutil
   ];
 }

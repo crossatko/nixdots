@@ -11,6 +11,11 @@ vim.cmd([[
   highlight statusline guibg=NONE ctermbg=NONE
 ]])
 
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
+
 -- prevent colorscheme overrides
 -- vim.api.nvim_create_autocmd("ColorScheme", {
 --   pattern = "*",

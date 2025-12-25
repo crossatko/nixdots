@@ -8,6 +8,7 @@
       "wheel"
       "render"
       "video"
+      "i2c"
       "docker"
     ];
     shell = pkgs.zsh;

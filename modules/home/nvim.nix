@@ -32,6 +32,15 @@
       tailwindcss-language-server
       vtsls
       vue-language-server
+      hyprls
+      stdenv.cc.cc
+      zlib
+      fuse3
+      icu
+      nss
+      openssl
+      curl
+      expat
     ];
   };
 

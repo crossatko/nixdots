@@ -34,4 +34,5 @@
     enable = true;
     powerOnBoot = true;
   };
+  hardware.i2c.enable = true;
 }
