@@ -1,6 +1,9 @@
 { pkgs, ... }:
 
 {
+  hardware.steam-hardware.enable = true;
+  boot.kernelModules = [ "hid-playstation" ];
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;

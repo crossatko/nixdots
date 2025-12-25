@@ -27,7 +27,7 @@ in
     sessionVariables =
       {
         XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
-        GTK_THEME = "Adwaita-dark";
+        GTK_USE_PORTAL = "1";
       };
 
     stateVersion = "25.11";
@@ -36,7 +36,7 @@ in
       gtk.enable = true;
       x11.enable = true;
       package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
+      name = "Yaru";
       size = 24;
     };
 
@@ -59,11 +59,19 @@ in
       fastfetch
       nautilus
       gvfs
-      adwaita-icon-theme
       glib
       waybar
       tldr
-      # trezor-suite
+      trezor-suite
+      gnome-disk-utility
+
+
+      adwaita-icon-theme
+      yaru-theme
+      ubuntu-themes
+      catppuccin-gtk
+      catppuccin-kvantum
+
     ];
   };
 
@@ -74,6 +82,7 @@ in
   ];
 
   programs = {
+
     gh = {
       enable = true;
       settings = {
@@ -153,48 +162,99 @@ in
         add_newline = true;
       };
     };
+
   };
 
-  xdg.configFile = builtins.mapAttrs
-    (name: subpath: {
-      source = create_symlink "${dotfiles}/${subpath}";
-      recursive = true;
-    })
-    configs;
+
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config = {
+        common = {
+          default = [ "gtk" ];
+        };
+        hyprland = {
+          default = [ "hyprland" "gtk" ];
+          "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+        };
+      };
+    };
+    configFile = (builtins.mapAttrs
+      (name: subpath: {
+        source = create_symlink "${dotfiles}/${subpath}";
+        recursive = true;
+      })
+      configs) // {
+      "Kvantum/kvantum.kvconfig".text = ''
+        [General]
+        theme=Catppuccin-Mocha-Blue
+      '';
+      "gtk-3.0/bookmarks".text = ''
+        file:///home/${user}/Documents
+        file:///home/${user}/Downloads
+        file:///home/${user}/Music
+        file:///home/${user}/Pictures
+        file:///home/${user}/Videos
+        file:///home/${user}/code
+      '';
+    };
+
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      download = "$HOME/Downloads";
+      documents = "$HOME/Documents";
+      music = "$HOME/Music";
+      pictures = "$HOME/Pictures";
+      videos = "$HOME/Videos";
+    };
+  };
 
   fonts.fontconfig.enable = true;
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      cursor-theme = "Yaru";
+      icon-theme = "Yaru";
+    };
+  };
+
   gtk = {
     enable = true;
+
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = "catppuccin-mocha-blue-standard+black";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "blue" ];
+        variant = "mocha";
+        tweaks = [ "black" ];
+      };
     };
+
+    iconTheme = {
+      name = "Yaru";
+      package = pkgs.yaru-theme;
+    };
+
     cursorTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
+      name = "Yaru";
+      package = pkgs.yaru-theme;
+      size = 24;
     };
   };
 
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
-    style.package = pkgs.adwaita-qt;
+    style.name = "kvantum"; # Kvantum handles OLED themes for QT best
   };
 
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-  };
 
   services.blueman-applet.enable = true;
+
 
 }

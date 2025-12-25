@@ -24,4 +24,14 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+
+  services.gnome.tinysparql.enable = true;
+  services.gnome.localsearch.enable = true;
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+
+  services.samba.openFirewall = true;
+  services.samba.nsswins = true;
 }

@@ -9,15 +9,31 @@ in
 {
   programs.hyprland = {
     enable = true;
-
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
+
+  services.dbus.enable = true;
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    GDK_BACKEND = "wayland";
+    SDL_VIDEODRIVER = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    XDG_SESSION_CLASS = "user";
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_SESSION_DESKTOP = "Hyprland";
+  };
 
   environment.systemPackages = with pkgs; [
     kitty

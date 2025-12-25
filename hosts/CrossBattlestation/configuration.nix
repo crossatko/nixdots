@@ -16,12 +16,16 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  hardware.enableAllFirmware = true;
 
   boot.initrd.luks.devices."luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1".device = "/dev/disk/by-uuid/e9e4b34e-873b-41da-85c5-da16ad7c17c1";
 
   networking.hostName = "CrossBattlestation";
   networking.networkmanager.enable = true;
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 }
