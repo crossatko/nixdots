@@ -25,6 +25,8 @@ in
     hyprpaper
     xdg-desktop-portal-hyprland
     hyprsunset
+    hypridle
+    hyprlock
   ];
 
   nix.settings = {
