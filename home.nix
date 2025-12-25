@@ -133,8 +133,9 @@ in
       };
 
       shellAliases = {
-        rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd";
-        rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd";
+        udd = "update-desktop-database ~/.local/share/applications";
+        rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd && udd";
+        rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd && udd";
       };
     };
 
@@ -185,5 +186,7 @@ in
       color-scheme = "prefer-dark";
     };
   };
+
+  services.blueman-applet.enable = true;
 
 }
