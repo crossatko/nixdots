@@ -1,15 +1,30 @@
-@define-color black rgba(0, 0, 0, 0.5);
-@define-color background rgba(25, 23, 36, 0.75);
-@define-color text rgba(224, 222, 244, 0.75);
-@define-color text-transparent rgba(224, 222, 244, 0.2);
-@define-color text-inverse rgba(25, 23, 36, 1);
-@define-color button rgba(25, 23, 36, 0.75);
-@define-color button-hover rgba(224, 222, 244, 0.2);
-@define-color button-active rgba(235, 188, 186, 0.75);
-@define-color button-active-hover rgb(246, 193, 119);
-@define-color info rgb(49, 116, 143);
-@define-color warning #ea9d34;
-@define-color error #eb6f92;
+/* Catppuccin Mocha Colors */
+@define-color base            #1e1e2e;
+@define-color surface0        #313244;
+@define-color overlay0        #6c7086;
+@define-color text            #cdd6f4;
+@define-color subtext0        #a6adc8;
+
+/* Accent Colors */
+@define-color mauve           #cba6f7; /* Primary Action */
+@define-color sapphire        #74c7ec; /* Info */
+@define-color yellow          #f9e2af; /* Warning */
+@define-color red             #f38ba8; /* Error/Urgent */
+@define-color flamingo        #f2cdcd; /* Active/Special */
+
+/* Functional Mappings (Keeping your requested Black/Transparent vibe) */
+@define-color black           rgba(0, 0, 0, 0.5);
+@define-color background      rgba(17, 17, 27, 0.75); /* Mantle hex w/ alpha */
+@define-color text-main       rgba(205, 214, 244, 0.75);
+@define-color text-transparent rgba(205, 214, 244, 0.2);
+@define-color text-inverse    #11111b;
+@define-color button          rgba(30, 30, 46, 0.75); /* Base hex w/ alpha */
+@define-color button-hover    rgba(203, 166, 247, 0.2); /* Mauve transparent */
+@define-color button-active   @flamingo;
+@define-color button-active-hover @mauve;
+@define-color info            @sapphire;
+@define-color warning         @yellow;
+@define-color error           @red;
 
 * {
   font-family: "ComicShannsMono Nerd Font", Helvetica, Arial, sans-serif;

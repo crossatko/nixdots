@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland?submodules=1";
+    # hyprland.url = "github:hyprwm/Hyprland?submodules=1";
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
   };
 
@@ -18,7 +18,7 @@
     { self
     , nixpkgs
     , home-manager
-    , hyprland
+      # , hyprland
     , nix-flatpak
     , ...
     }@inputs:

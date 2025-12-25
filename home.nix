@@ -55,7 +55,6 @@ in
       pavucontrol
       networkmanagerapplet
       yazi
-      fastfetch
       nautilus
       gvfs
       glib
@@ -168,6 +167,47 @@ in
       };
     };
 
+
+    fastfetch = {
+      enable = true;
+      settings = {
+        logo = {
+          source = "nixos_small";
+          padding = {
+            right = 1;
+          };
+        };
+        display = {
+          size = {
+            binaryPrefix = "si";
+          };
+          color = "blue";
+          separator = "   ";
+        };
+        modules = [
+          "title"
+          "separator"
+          "os"
+          "host"
+          "kernel"
+          "uptime"
+          "packages"
+          "shell"
+          "display"
+          "de"
+          "wm"
+          "terminal"
+          {
+            type = "cpu";
+            format = "{1} ({3}) @ {7} GHz";
+          }
+          "gpu"
+          "memory"
+          "break"
+          "colors"
+        ];
+      };
+    };
   };
 
 
@@ -257,6 +297,7 @@ in
     platformTheme.name = "gtk";
     style.name = "kvantum"; # Kvantum handles OLED themes for QT best
   };
+
 
 
   services.blueman-applet.enable = true;
