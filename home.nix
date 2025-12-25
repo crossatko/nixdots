@@ -100,9 +100,14 @@ in
 
     git = {
       enable = true;
-      settings.user = {
-        name = "Paul Cross";
-        email = "me@paulcross.cz";
+      extraConfig = {
+        pull.rebase = true;
+      };
+      settings = {
+        user = {
+          name = "Paul Cross";
+          email = "me@paulcross.cz";
+        };
       };
     };
 
