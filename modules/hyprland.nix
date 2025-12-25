@@ -27,6 +27,7 @@ in
     hyprsunset
     hypridle
     hyprlock
+    swaynotificationcenter
   ];
 
   nix.settings = {

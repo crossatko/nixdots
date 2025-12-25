@@ -24,5 +24,7 @@
 
     libappindicator-gtk3
     libdbusmenu-gtk3
+
+    libnotify
   ];
 }
