@@ -41,7 +41,6 @@ in
     };
 
     packages = with pkgs; [
-      brave
       nerd-fonts.comic-shanns-mono
       zellij
       wl-clipboard
@@ -64,6 +63,7 @@ in
       glib
       waybar
       tldr
+      trezor-suite
     ];
   };
 
@@ -74,6 +74,14 @@ in
   ];
 
   programs = {
+    gh = {
+      enable = true;
+      settings = {
+        git_protocol = "ssh";
+      };
+    };
+
+
     ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -90,11 +98,12 @@ in
       enable = true;
       package = pkgs.brave;
       extensions = [
-        { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; }
-        { id = "nhdogjmejiglipccpnnnanhbledajbpd"; }
-        { id = "jabopobgcpjmedljpbcaablpmlmfcogm"; }
-        { id = "gebbhagfogifgggkldgodflihgfeippi"; }
-        { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; }
+        { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
+        { id = "nhdogjmejiglipccpnnnanhbledajbpd"; } # Vue devtools
+        { id = "jabopobgcpjmedljpbcaablpmlmfcogm"; } # WhatFont
+        { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return Youtube Dislike
+        { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # SponsorBlock'
+        { id = "hkgfoiooedgoejojocmhlaklaeopbecg"; } # PiP
       ];
     };
 

@@ -2,7 +2,7 @@
   {
     "output": ["DP-3", "Virtual-1"],
     "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
+    "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 24, // Waybar height (to be removed for auto height)
     "width": "full", // Waybar width
     "spacing": 0, // Gaps between modules (4px)
