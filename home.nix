@@ -24,19 +24,18 @@ in
       "$HOME/.local/bin"
     ];
 
-    sessionVariables =
-      {
-        XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
-        GTK_USE_PORTAL = "1";
-      };
+    sessionVariables = {
+      XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+      GTK_USE_PORTAL = "1";
+    };
+    file.".icons/Bibata-Modern-Classic".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
     stateVersion = "25.11";
 
     pointerCursor = {
       gtk.enable = true;
-      x11.enable = true;
-      package = pkgs.adwaita-icon-theme;
-      name = "Yaru";
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
       size = 24;
     };
 
@@ -150,9 +149,15 @@ in
       };
 
       shellAliases = {
+        # Nix stuff
         udd = "update-desktop-database ~/.local/share/applications";
         rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd && udd";
         rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd && udd";
+
+        # webdev
+        up = "make up";
+        upd = "make up.d";
+        down = "make down";
       };
     };
 
@@ -218,7 +223,7 @@ in
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      cursor-theme = "Yaru";
+      cursor-theme = "Bibata-Modern-Classic";
       icon-theme = "Yaru";
     };
   };
@@ -241,8 +246,8 @@ in
     };
 
     cursorTheme = {
-      name = "Yaru";
-      package = pkgs.yaru-theme;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
       size = 24;
     };
   };

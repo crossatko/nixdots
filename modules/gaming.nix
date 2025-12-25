@@ -14,6 +14,7 @@
     mangohud
     gamemode
     gamescope
+    protonplus
   ];
 
 }
