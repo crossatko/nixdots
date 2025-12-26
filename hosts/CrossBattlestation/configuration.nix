@@ -22,9 +22,10 @@
   ];
 
   boot.initrd.luks.devices."luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1".device = "/dev/disk/by-uuid/e9e4b34e-873b-41da-85c5-da16ad7c17c1";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   powerManagement.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.enableAllFirmware = true;
 
   networking.hostName = "CrossBattlestation";
@@ -35,4 +36,20 @@
     powerOnBoot = true;
   };
   hardware.i2c.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      libva-utils
+      rocmPackages.clr.icd
+      libva
+      libva-vdpau-driver
+      libvdpau-va-gl
+      mesa
+      vulkan-loader
+      vulkan-validation-layers
+      vulkan-tools
+    ];
+  };
 }

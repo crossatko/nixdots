@@ -21,6 +21,8 @@
     git
     vim
     killall
+    btop
+    ffmpeg
 
     libappindicator-gtk3
     libdbusmenu-gtk3

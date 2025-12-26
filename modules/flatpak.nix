@@ -12,6 +12,7 @@
       "com.bambulab.BambuStudio"
       "com.obsproject.Studio"
       "org.signal.Signal"
+      "com.github.iwalton3.jellyfin-media-player"
     ];
     update.onActivation = true;
   };

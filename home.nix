@@ -1,5 +1,6 @@
 { config
 , pkgs
+, lib
 , ...
 }:
 
@@ -48,7 +49,6 @@ in
       binutils
       desktop-file-utils
       thunderbird
-      btop
       mpv
       swappy
       imv
@@ -112,6 +112,20 @@ in
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # SponsorBlock'
         { id = "hkgfoiooedgoejojocmhlaklaeopbecg"; } # PiP
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
+        { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
+      ];
+      commandLineArgs = [
+        "--ozone-platform-hint=auto"
+        "--ozone-platform=wayland"
+        "--gtk-version=4"
+        "--enable-vulkan"
+        "--enable-features=SkiaGraphite"
+        "--ignore-gpu-blocklist"
+        "--enable-gpu-rasterization"
+        "--enable-zero-copy"
+        "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoEncoder,VaapiVideoDecodeLinuxGL"
+        "--enable-unsafe-webgpu"
+        "--enable-features=WebRTCPipeWireCapturer"
       ];
     };
 
@@ -255,6 +269,41 @@ in
       music = "$HOME/Music";
       pictures = "$HOME/Pictures";
       videos = "$HOME/Videos";
+    };
+
+    desktopEntries = {
+      figma = {
+        name = "Figma";
+        exec = "${lib.getExe pkgs.brave} --app=https://www.figma.com";
+        icon = "brave-browser";
+        terminal = false;
+        categories = [ "Graphics" ];
+        settings = {
+          StartupWMClass = "www.figma.com";
+        };
+      };
+
+      linear = {
+        name = "Linear";
+        exec = "${lib.getExe pkgs.brave} --app=https://linear.app";
+        icon = "brave-browser";
+        terminal = false;
+        categories = [ "Office" ];
+        settings = {
+          StartupWMClass = "linear.app";
+        };
+      };
+
+      whatsapp = {
+        name = "WhatsApp";
+        exec = "${lib.getExe pkgs.brave} --app=https://web.whatsapp.com";
+        icon = "brave-browser";
+        terminal = false;
+        categories = [ "Network" "Chat" ];
+        settings = {
+          StartupWMClass = "web.whatsapp.com";
+        };
+      };
     };
   };
 
