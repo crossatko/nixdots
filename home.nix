@@ -124,7 +124,6 @@ in
         "--enable-gpu-rasterization"
         "--enable-zero-copy"
         "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoEncoder,VaapiVideoDecodeLinuxGL"
-        "--enable-unsafe-webgpu"
         "--enable-features=WebRTCPipeWireCapturer"
       ];
     };
