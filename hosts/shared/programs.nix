@@ -29,5 +29,7 @@
 
     libnotify
     ddcutil
+
+    tailscale
   ];
 }

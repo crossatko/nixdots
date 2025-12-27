@@ -34,4 +34,6 @@
 
   services.samba.openFirewall = true;
   services.samba.nsswins = true;
+
+  services.tailscale.enable = true;
 }
