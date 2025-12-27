@@ -12,6 +12,8 @@
 
     # hyprland.url = "github:hyprwm/Hyprland?submodules=1";
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
+
+    wivrn.url = "github:WiVRn/WiVRn/v25.12";
   };
 
   outputs =
