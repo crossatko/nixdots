@@ -165,6 +165,7 @@ in
         udd = "update-desktop-database ~/.local/share/applications";
         rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd && udd";
         rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd && udd";
+        nix-cleanup = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d";
 
         # webdev
         up = "make up";
