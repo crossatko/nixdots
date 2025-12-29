@@ -65,6 +65,7 @@ in
       trezor-suite
       gnome-disk-utility
       kdePackages.ktorrent
+      libreoffice
 
       adwaita-icon-theme
       yaru-theme
@@ -76,6 +77,7 @@ in
       vtsls
       typescript-language-server
       prettier
+      lazygit
 
     ];
 
@@ -174,6 +176,9 @@ in
         rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd && udd";
         rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd && udd";
         nix-cleanup = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d";
+
+        # general
+        ":q" = "exit";
 
         # webdev
         up = "make up";
