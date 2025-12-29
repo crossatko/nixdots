@@ -49,7 +49,4 @@
       typescript-language-server
     ];
   };
-
-
-
 }

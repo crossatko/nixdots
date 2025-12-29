@@ -14,12 +14,15 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
 
     wivrn.url = "github:WiVRn/WiVRn/v25.12";
+
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs =
     { self
     , nixpkgs
     , home-manager
+    , nixvim
       # , hyprland
     , nix-flatpak
     , ...

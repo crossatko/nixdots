@@ -1,6 +1,7 @@
 { config
 , pkgs
 , lib
+, inputs
 , ...
 }:
 
@@ -29,7 +30,8 @@ in
       XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
       GTK_USE_PORTAL = "1";
     };
-    file.".icons/Bibata-Modern-Classic".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
+    file.".icons/Bibata-Modern-Classic".source =
+      "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
     stateVersion = "25.11";
 
@@ -81,6 +83,8 @@ in
 
   imports = [
     ./modules/home/nvim.nix
+    # inputs.nixvim.homeModules.nixvim
+    # ./modules/home/nixvim.nix
     ./modules/home/kitty.nix
     ./modules/home/tableplus.nix
   ];
@@ -93,7 +97,6 @@ in
         git_protocol = "ssh";
       };
     };
-
 
     ssh = {
       enable = true;
@@ -147,7 +150,6 @@ in
 
     home-manager.enable = true;
 
-
     bash = {
       enable = true;
     };
@@ -186,7 +188,6 @@ in
         add_newline = true;
       };
     };
-
 
     fastfetch = {
       enable = true;
@@ -230,7 +231,6 @@ in
     };
   };
 
-
   xdg = {
     portal = {
       enable = true;
@@ -242,30 +242,35 @@ in
           default = [ "gtk" ];
         };
         hyprland = {
-          default = [ "hyprland" "gtk" ];
+          default = [
+            "hyprland"
+            "gtk"
+          ];
           "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
         };
       };
     };
-    configFile = (builtins.mapAttrs
-      (name: subpath: {
-        source = create_symlink "${dotfiles}/${subpath}";
-        recursive = true;
-      })
-      configs) // {
-      "Kvantum/kvantum.kvconfig".text = ''
-        [General]
-        theme=Catppuccin-Mocha-Blue
-      '';
-      "gtk-3.0/bookmarks".text = ''
-        file:///home/${user}/Documents
-        file:///home/${user}/Downloads
-        file:///home/${user}/Music
-        file:///home/${user}/Pictures
-        file:///home/${user}/Videos
-        file:///home/${user}/code
-      '';
-    };
+    configFile =
+      (builtins.mapAttrs
+        (name: subpath: {
+          source = create_symlink "${dotfiles}/${subpath}";
+          recursive = true;
+        })
+        configs)
+      // {
+        "Kvantum/kvantum.kvconfig".text = ''
+          [General]
+          theme=Catppuccin-Mocha-Blue
+        '';
+        "gtk-3.0/bookmarks".text = ''
+          file:///home/${user}/Documents
+          file:///home/${user}/Downloads
+          file:///home/${user}/Music
+          file:///home/${user}/Pictures
+          file:///home/${user}/Videos
+          file:///home/${user}/code
+        '';
+      };
 
     userDirs = {
       enable = true;
@@ -305,7 +310,10 @@ in
         exec = "${lib.getExe pkgs.brave} --app=https://web.whatsapp.com";
         icon = "brave-browser";
         terminal = false;
-        categories = [ "Network" "Chat" ];
+        categories = [
+          "Network"
+          "Chat"
+        ];
         settings = {
           StartupWMClass = "web.whatsapp.com";
         };
