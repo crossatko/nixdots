@@ -3,6 +3,12 @@ return {
   lazy = true,
   event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
   opts = {
+    formatters = {
+      prettier = {
+        command = "prettier",
+        cwd = require("conform.util").root_file({ "package.json", ".git" }),
+      },
+    },
     formatters_by_ft = {
       css = { "prettier" },
       html = { "prettier" },
