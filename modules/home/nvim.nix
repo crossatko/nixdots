@@ -23,15 +23,19 @@
       nixfmt-rfc-style
       bash-language-server
       emmet-ls
-      vscode-langservers-extracted # for jsonls
-      marksman # for markdown
+      vscode-langservers-extracted
+      marksman
       nil
       nixpkgs-fmt
       prettier
       shfmt
       tailwindcss-language-server
-      vtsls
-      vue-language-server
+
+      # Use these top-level names instead of nodePackages
+      vtsls # This replaces nodePackages.vtsls
+      vue-language-server # This replaces nodePackages.volar
+      taplo # This replaces nodePackages.taplo
+
       hyprls
       stdenv.cc.cc
       zlib
@@ -41,7 +45,13 @@
       openssl
       curl
       expat
+      inotify-tools
+
+      # If you still need these specific ones:
+      typescript-language-server
     ];
   };
+
+
 
 }

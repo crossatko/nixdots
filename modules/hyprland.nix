@@ -43,6 +43,7 @@ in
     hyprsunset
     hypridle
     hyprlock
+    hyprpolkitagent
     swaynotificationcenter
     hyprshot
   ];

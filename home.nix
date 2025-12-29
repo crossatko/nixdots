@@ -62,7 +62,7 @@ in
       tldr
       trezor-suite
       gnome-disk-utility
-
+      kdePackages.ktorrent
 
       adwaita-icon-theme
       yaru-theme
@@ -70,7 +70,13 @@ in
       catppuccin-gtk
       catppuccin-kvantum
 
+      vue-language-server
+      vtsls
+      typescript-language-server
+      prettier
+
     ];
+
   };
 
   imports = [
@@ -347,9 +353,5 @@ in
     style.name = "kvantum"; # Kvantum handles OLED themes for QT best
   };
 
-
-
   services.blueman-applet.enable = true;
-
-
 }

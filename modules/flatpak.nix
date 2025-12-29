@@ -13,6 +13,7 @@
       "com.obsproject.Studio"
       "org.signal.Signal"
       "com.github.iwalton3.jellyfin-media-player"
+      "io.github.benjamimgois.goverlay"
     ];
     update.onActivation = true;
   };
