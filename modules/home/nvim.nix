@@ -31,10 +31,9 @@
       shfmt
       tailwindcss-language-server
 
-      # Use these top-level names instead of nodePackages
-      vtsls # This replaces nodePackages.vtsls
-      vue-language-server # This replaces nodePackages.volar
-      taplo # This replaces nodePackages.taplo
+      vtsls
+      vue-language-server
+      taplo
 
       hyprls
       stdenv.cc.cc
@@ -47,7 +46,6 @@
       expat
       inotify-tools
 
-      # If you still need these specific ones:
       typescript-language-server
     ];
   };
