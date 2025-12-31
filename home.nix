@@ -79,6 +79,14 @@ in
       prettier
       lazygit
 
+      kdePackages.ark
+      zip
+      unzip
+      rar
+      p7zip
+      _7zz
+
+
     ];
 
   };
