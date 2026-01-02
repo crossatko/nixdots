@@ -5,39 +5,38 @@
 
 {
   imports =
-    [
-      (modulesPath + "/profiles/qemu-guest.nix")
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    {
-      device = "/dev/mapper/luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834";
+    { device = "/dev/mapper/luks-1302885e-1d44-4384-bd2a-9d805b24fc51";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
-  boot.initrd.luks.devices."luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834".device = "/dev/disk/by-uuid/17c58fc2-504b-4e8c-a359-b6fb7c24a834";
+  boot.initrd.luks.devices."luks-1302885e-1d44-4384-bd2a-9d805b24fc51".device = "/dev/disk/by-uuid/1302885e-1d44-4384-bd2a-9d805b24fc51";
 
   fileSystems."/home" =
-    {
-      device = "/dev/mapper/luks-17c58fc2-504b-4e8c-a359-b6fb7c24a834";
+    { device = "/dev/mapper/luks-1302885e-1d44-4384-bd2a-9d805b24fc51";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/4664-892C";
+    { device = "/dev/disk/by-uuid/3278-214C";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  swapDevices = [ ];
+  swapDevices =
+    [ { device = "/dev/mapper/luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1"; }
+    ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
