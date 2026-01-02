@@ -57,6 +57,35 @@
         ];
       };
 
+
+      nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+
+        modules = [
+          ({ config, pkgs, ... }: {
+            environment.variables = {
+              HOST_CROSS_WORKSTATION = "1";
+            };
+          })
+
+          ./hosts/CrossWorkstation/configuration.nix
+          ./modules/hyprland.nix
+          ./modules/flatpak.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users.kreejzak = import ./home.nix;
+              extraSpecialArgs = { inherit inputs; };
+            };
+          }
+        ];
+      };
+
       nixosConfigurations.NixVM = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
