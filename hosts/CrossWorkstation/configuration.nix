@@ -19,4 +19,31 @@
   networking.hostName = "CrossWorkstation"; # Define your hostname.
 
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  hardware.i2c.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    package = pkgs.mesa;
+    extraPackages = with pkgs; [
+      libva
+      libva-utils
+      rocmPackages.clr.icd
+      libva-vdpau-driver
+      libvdpau-va-gl
+    ];
+  };
+  networking.firewall.allowedTCPPorts = [ 53317 ];
+  networking.firewall.allowedUDPPorts = [ 53317 ];
+
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    clinfo
+    pciutils
+  ];
 }
