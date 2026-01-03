@@ -44,6 +44,9 @@ in
 
     packages = with pkgs; [
       nerd-fonts.comic-shanns-mono
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       zellij
       wl-clipboard
       gnumake
@@ -334,7 +337,9 @@ in
     };
   };
 
+
   fonts.fontconfig.enable = true;
+
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
