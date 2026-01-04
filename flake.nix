@@ -14,18 +14,18 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
 
     wivrn.url = "github:WiVRn/WiVRn/v25.12";
-
-    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , nixvim
-    , hyprland
-    , nix-flatpak
-    , ...
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixvim,
+      hyprland,
+      nix-flatpak,
+      nur,
+      ...
     }@inputs:
     {
       nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
@@ -33,11 +33,14 @@
         specialArgs = { inherit inputs; };
 
         modules = [
-          ({ config, pkgs, ... }: {
-            environment.variables = {
-              HOST_CROSS_BATTLESTATION = "1";
-            };
-          })
+          (
+            { config, pkgs, ... }:
+            {
+              environment.variables = {
+                HOST_CROSS_BATTLESTATION = "1";
+              };
+            }
+          )
 
           ./hosts/CrossBattlestation/configuration.nix
           ./modules/hyprland.nix
@@ -57,17 +60,19 @@
         ];
       };
 
-
       nixosConfigurations.CrossWorkstation = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
 
         modules = [
-          ({ config, pkgs, ... }: {
-            environment.variables = {
-              HOST_CROSS_WORKSTATION = "1";
-            };
-          })
+          (
+            { config, pkgs, ... }:
+            {
+              environment.variables = {
+                HOST_CROSS_WORKSTATION = "1";
+              };
+            }
+          )
 
           ./hosts/CrossWorkstation/configuration.nix
           ./modules/hyprland.nix
@@ -91,11 +96,14 @@
         specialArgs = { inherit inputs; };
 
         modules = [
-          ({ config, pkgs, ... }: {
-            environment.variables = {
-              HOST_NIX_VM = "1";
-            };
-          })
+          (
+            { config, pkgs, ... }:
+            {
+              environment.variables = {
+                HOST_NIX_VM = "1";
+              };
+            }
+          )
 
           ./hosts/NixVM/configuration.nix
           ./modules/hyprland.nix

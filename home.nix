@@ -1,8 +1,9 @@
-{ config
-, pkgs
-, lib
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
 }:
 
 let
@@ -82,6 +83,7 @@ in
       prettier
       lazygit
       nodePackages.typescript
+      statix
 
       kdePackages.ark
       zip
@@ -90,7 +92,6 @@ in
       p7zip
       _7zz
       gzip
-
 
     ];
 
@@ -269,12 +270,10 @@ in
       };
     };
     configFile =
-      (builtins.mapAttrs
-        (name: subpath: {
-          source = create_symlink "${dotfiles}/${subpath}";
-          recursive = true;
-        })
-        configs)
+      (builtins.mapAttrs (name: subpath: {
+        source = create_symlink "${dotfiles}/${subpath}";
+        recursive = true;
+      }) configs)
       // {
         "Kvantum/kvantum.kvconfig".text = ''
           [General]
@@ -339,9 +338,7 @@ in
     };
   };
 
-
   fonts.fontconfig.enable = true;
-
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {

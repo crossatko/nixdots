@@ -40,7 +40,6 @@ window#waybar > box {
   padding-bottom: 0;
   padding: 4px;
   background: @black;
-  /* background: red; */
   border-radius: 0px;
 }
 
@@ -71,6 +70,18 @@ button:hover {
   min-width: 24px;
   border-radius: 14px;
   padding: 0px 0px;
+}
+#workspaces button.empty {
+  background-color: transparent;
+  color: @overlay0;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+/* Optional: Make empty workspaces light up when you hover over them */
+#workspaces button.empty:hover {
+  background-color: @button-hover;
+  color: @text;
 }
 
 #workspaces button label {
