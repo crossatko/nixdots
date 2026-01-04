@@ -5,11 +5,8 @@
     enable = true;
     vimAlias = true;
     viAlias = true;
-    plugins = [
-      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-    ];
+
     extraPackages = with pkgs; [
-      lua
       lua-language-server
       stylua
       ripgrep
@@ -18,6 +15,8 @@
       lazygit
       nodejs
       cargo
+      gcc
+      gnumake
       unzip
       tree-sitter
       nixfmt-rfc-style
@@ -30,12 +29,15 @@
       prettier
       shfmt
       tailwindcss-language-server
-
       vtsls
       vue-language-server
+      nodePackages.typescript
       taplo
-
       hyprls
+      inotify-tools
+      typescript-language-server
+
+      # Optional: runtime libs (not strictly needed with nix-ld, but harmless)
       stdenv.cc.cc
       zlib
       fuse3
@@ -44,9 +46,6 @@
       openssl
       curl
       expat
-      inotify-tools
-
-      typescript-language-server
     ];
   };
 }

@@ -81,6 +81,7 @@ in
       typescript-language-server
       prettier
       lazygit
+      nodePackages.typescript
 
       kdePackages.ark
       zip
@@ -88,6 +89,7 @@ in
       rar
       p7zip
       _7zz
+      gzip
 
 
     ];

@@ -32,4 +32,29 @@
 
     tailscale
   ];
+
+  programs.nix-ld.enable = true;
+
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib # glibc + core libs
+    zlib
+    fuse3
+    icu
+    nss
+    openssl
+    curl
+    expat
+    systemd # Often needed
+    glib
+    libxml2
+    util-linux
+    attr
+    acl
+    bzip2
+    xz
+    zstd
+    libssh
+    libgcc
+  ];
+
 }
