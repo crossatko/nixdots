@@ -36,7 +36,7 @@
   programs.nix-ld.enable = true;
 
   programs.nix-ld.libraries = with pkgs; [
-    stdenv.cc.cc.lib # glibc + core libs
+    stdenv.cc.cc.lib
     zlib
     fuse3
     icu
@@ -44,7 +44,7 @@
     openssl
     curl
     expat
-    systemd # Often needed
+    systemd
     glib
     libxml2
     util-linux
