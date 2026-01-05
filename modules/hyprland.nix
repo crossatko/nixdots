@@ -15,14 +15,18 @@ in
     xwayland.enable = true;
   };
 
-  # xdg.portal = {
-  #   enable = true;
-  #   package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  #   extraPortals = [
-  #     pkgs.xdg-desktop-portal-hyprland
-  #     pkgs.xdg-desktop-portal-gtk
-  #   ];
-  # };
+  systemd.user.services.hypr-focus-daemon = {
+    description = "Hyprland Focus Daemon";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    after = [ "graphical-session-pre.target" ];
+
+    serviceConfig = {
+      ExecStart = "/etc/profiles/per-user/kreejzak/bin/python3 /home/kreejzak/.config/hypr/scripts/movefocus_daemon.py";
+      Restart = "always";
+      RestartSec = "2";
+    };
+  };
 
   services.dbus.enable = true;
 

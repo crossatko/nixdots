@@ -24,6 +24,10 @@
     btop
     ffmpeg
 
+    python3
+    nodejs
+    jq
+
     libappindicator-gtk3
     libdbusmenu-gtk3
 

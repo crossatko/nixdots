@@ -93,6 +93,11 @@ in
       _7zz
       gzip
 
+      playerctl
+
+      python3
+      nodejs
+
     ];
 
   };
