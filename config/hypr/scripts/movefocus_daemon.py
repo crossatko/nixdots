@@ -95,8 +95,26 @@ def handle_focus(direction):
             elif direction == 'd' and cy > ay: match = True
 
             if match:
-                dist = math.hypot(cx - ax, cy - ay)
-                candidates.append((dist, c['address']))
+                dx = cx - ax
+                dy = cy - ay
+
+                weight_x = 1.0
+                weight_y = 1.0
+
+                PENALTY = 2.5 
+                if direction in ['u', 'd']:
+                    weight_x = PENALTY
+                elif direction in ['l', 'r']:
+                    weight_y = PENALTY
+
+                base_dist = math.hypot(dx * weight_x, dy * weight_y)
+
+                w_area = c['size'][0] * c['size'][1]
+                size_bonus = math.sqrt(w_area) * 0.8
+
+                final_score = base_dist - size_bonus
+
+                candidates.append((final_score, c['address']))
 
         if candidates:
             candidates.sort(key=lambda x: x[0])
