@@ -1,4 +1,9 @@
-{ pkgs, config, inputs, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 
 {
   hardware.steam-hardware.enable = true;
@@ -11,6 +16,26 @@
     extraPackages = [
       pkgs.gamemode
     ];
+
+    gamescopeSession = {
+      enable = true;
+      args = [
+        "-w"
+        "2560"
+        "-h"
+        "1440"
+        "-W"
+        "2560" # Explicit output width (usually matches your monitor native)
+        "-H"
+        "1440" # Explicit output height
+        "-O"
+        "DP-2" # <-- Force Gamescope to use the DP-2 connector
+        "--adaptive-sync"
+        "--hdr-enabled"
+        "-f" # Fullscreen
+        "-e" # Embedded mode (better Steam integration)
+      ];
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -21,6 +46,8 @@
     bs-manager
     opencomposite
   ];
+
+  programs.adb.enable = true;
 
   services.wivrn = {
     enable = true;
@@ -76,7 +103,4 @@
   #   };
   # };
 
-
 }
-
-
