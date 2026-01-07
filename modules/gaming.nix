@@ -36,7 +36,6 @@
       };
     };
     gamemode.enable = true;
-    adb.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

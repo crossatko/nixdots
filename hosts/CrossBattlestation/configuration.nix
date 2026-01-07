@@ -9,52 +9,61 @@
     ../shared/user.nix
     ../shared/programs.nix
   ];
+  boot = {
+    loader = {
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 5;
-  boot.loader.efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+      systemd-boot.configurationLimit = 5;
+      efi.canTouchEfiVariables = true;
+    };
 
-  boot.resumeDevice = "/dev/mapper/luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1";
+    initrd.kernelModules = [ "amdgpu" ];
 
-  boot.kernelParams = [
-    "resume=/dev/mapper/luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1"
-    "pcie_aspm=off"
-  ];
+    resumeDevice = "/dev/mapper/luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1";
 
-  boot.initrd.luks.devices."luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1".device = "/dev/disk/by-uuid/e9e4b34e-873b-41da-85c5-da16ad7c17c1";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [
+      "resume=/dev/mapper/luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1"
+      "pcie_aspm=off"
+    ];
+
+    initrd.luks.devices."luks-e9e4b34e-873b-41da-85c5-da16ad7c17c1".device =
+      "/dev/disk/by-uuid/e9e4b34e-873b-41da-85c5-da16ad7c17c1";
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
   powerManagement.enable = true;
 
-  hardware.enableAllFirmware = true;
+  hardware = {
+    enableAllFirmware = true;
 
-  networking.hostName = "CrossBattlestation";
-  networking.networkmanager.enable = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
+    i2c.enable = true;
+
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      package = pkgs.mesa;
+      extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+      ];
+    };
   };
-  hardware.i2c.enable = true;
+
+  networking = {
+    hostName = "CrossBattlestation";
+    networkmanager.enable = true;
+
+    firewall.allowedTCPPorts = [ 53317 ];
+    firewall.allowedUDPPorts = [ 53317 ];
+  };
 
   environment.variables = {
     AMD_VULKAN_ICD = "RADV";
   };
-
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    package = pkgs.mesa;
-    extraPackages = with pkgs; [
-      libva
-      libva-utils
-      rocmPackages.clr.icd
-      libva-vdpau-driver
-      libvdpau-va-gl
-    ];
-  };
-  networking.firewall.allowedTCPPorts = [ 53317 ];
-  networking.firewall.allowedUDPPorts = [ 53317 ];
 
   environment.systemPackages = with pkgs; [
     vulkan-tools
