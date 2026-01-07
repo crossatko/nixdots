@@ -9,45 +9,43 @@
   hardware.steam-hardware.enable = true;
   boot.kernelModules = [ "hid-playstation" ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    extraPackages = [
-      pkgs.gamemode
-    ];
-
-    gamescopeSession = {
+  programs = {
+    steam = {
       enable = true;
-      args = [
-        "-w"
-        "2560"
-        "-h"
-        "1440"
-        "-W"
-        "2560" # Explicit output width (usually matches your monitor native)
-        "-H"
-        "1440" # Explicit output height
-        "-O"
-        "DP-2" # <-- Force Gamescope to use the DP-2 connector
-        "--adaptive-sync"
-        "--hdr-enabled"
-        "-f" # Fullscreen
-        "-e" # Embedded mode (better Steam integration)
-      ];
+      remotePlay.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+
+      gamescopeSession = {
+        enable = true;
+        args = [
+          "-w"
+          "2560"
+          "-h"
+          "1440"
+          "-W"
+          "2560" # Explicit output width (usually matches your monitor native)
+          "-H"
+          "1440" # Explicit output height
+          "-O"
+          "DP-2" # <-- Force Gamescope to use the DP-2 connector
+          "--adaptive-sync"
+          "--hdr-enabled"
+          "-f" # Fullscreen
+          "-e" # Embedded mode (better Steam integration)
+        ];
+      };
     };
+    gamemode.enable = true;
+    adb.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     mangohud
-    gamemode
     gamescope
     protonplus
     bs-manager
     opencomposite
   ];
-
-  programs.adb.enable = true;
 
   services.wivrn = {
     enable = true;

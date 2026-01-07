@@ -145,18 +145,13 @@ in
         { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
       ];
       commandLineArgs = [
-        "--ozone-platform-hint=auto"
         "--ozone-platform=wayland"
-        "--gtk-version=4"
+        "--enable-features=UseOzonePlatform:Wayland"
+        "--disable-features=WaylandWpColorManagerV1"
         "--enable-vulkan"
-        "--enable-features=SkiaGraphite"
-        "--ignore-gpu-blocklist"
-        "--enable-gpu-rasterization"
-        "--enable-zero-copy"
-        "--enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoEncoder,VaapiVideoDecodeLinuxGL"
-        "--enable-features=WebRTCPipeWireCapturer"
       ];
     };
+    firefox.enable = true;
 
     git = {
       enable = true;
