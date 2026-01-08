@@ -97,6 +97,7 @@ in
 
       python3
       nodejs
+      yarn
 
     ];
 
