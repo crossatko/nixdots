@@ -99,6 +99,8 @@ in
       nodejs
       yarn
 
+      appimage-run
+
     ];
 
   };

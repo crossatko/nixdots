@@ -19,7 +19,7 @@
       gnumake
       unzip
       tree-sitter
-      nixfmt-rfc-style
+      nixfmt
       bash-language-server
       emmet-ls
       vscode-langservers-extracted
