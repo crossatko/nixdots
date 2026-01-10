@@ -16,6 +16,7 @@ let
     nvim = "nvim";
     tofi = "tofi";
     waybar = "waybar";
+    opencode = "opencode";
   };
 in
 {

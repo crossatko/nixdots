@@ -38,6 +38,11 @@
             {
               environment.variables = {
                 HOST_CROSS_BATTLESTATION = "1";
+                QT_QPA_PLATFORM = "xcb";
+                SDL_VIDEODRIVER = "wayland";
+                RADV_PERFTEST = "nggc";
+                VKD3D_CONFIG = "dxr11";
+                AMD_VULKAN_ICD = "RADV";
               };
             }
           )
@@ -46,7 +51,7 @@
           ./modules/hyprland.nix
           ./modules/gaming.nix
           ./modules/flatpak.nix
-          ./modules/ai.nix
+          # ./modules/ai.nix
 
           home-manager.nixosModules.home-manager
           {

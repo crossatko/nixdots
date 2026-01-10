@@ -4,16 +4,27 @@
   inputs,
   ...
 }:
-
 {
   hardware.steam-hardware.enable = true;
   boot.kernelModules = [ "hid-playstation" ];
+
+  # Keep this if you have AMD GPU → helps with CAP_SYS_NICE / async reprojection
+  boot.kernelPatches = [
+    {
+      name = "amdgpu-ignore-ctx-privileges";
+      patch = pkgs.fetchpatch {
+        name = "cap_sys_nice_begone.patch";
+        url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
+        hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo="; # verify if still valid for your kernel
+      };
+    }
+  ];
 
   programs = {
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true; # Helps Steam Link discovery
 
       gamescopeSession = {
         enable = true;
@@ -23,18 +34,19 @@
           "-h"
           "1440"
           "-W"
-          "2560" # Explicit output width (usually matches your monitor native)
+          "2560"
           "-H"
-          "1440" # Explicit output height
+          "1440"
           "-O"
-          "DP-2" # <-- Force Gamescope to use the DP-2 connector
+          "DP-2"
           "--adaptive-sync"
           "--hdr-enabled"
-          "-f" # Fullscreen
-          "-e" # Embedded mode (better Steam integration)
+          "-f"
+          "-e"
         ];
       };
     };
+
     gamemode.enable = true;
   };
 
@@ -43,61 +55,20 @@
     gamescope
     protonplus
     bs-manager
+
+    # Keep opencomposite if you ever want to test bypassing SteamVR compositor (optional)
+    # But for pure SteamVR → you can remove it later
     opencomposite
   ];
 
+  # === CRITICAL: DISABLE WiVRn completely ===
   services.wivrn = {
-    enable = true;
-    openFirewall = true;
-    defaultRuntime = true;
-    package = inputs.wivrn.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    enable = false; # ← Change to false
+    # Remove or comment out the rest of this block
+    # openFirewall = true;
+    # defaultRuntime = true;
+    # package = ...;
   };
 
-  # systemd.paths.steamvr-fix = {
-  #   description = "Watch SteamVR launcher for changes";
-  #   wantedBy = [ "multi-user.target" ];
-  #   pathConfig = {
-  #     # Watch for changes to the file (e.g. Steam update)
-  #     PathChanged = "/home/kreejzak/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher";
-  #   };
-  # };
-  #
-  # systemd.services.steamvr-fix = {
-  #   description = "Apply CAP_SYS_NICE to SteamVR for AMDGPU Async Reprojection";
-  #   path = [ pkgs.libcap ]; # Provides the setcap binary
-  #
-  #   script = ''
-  #     TARGET="/home/kreejzak/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher"
-  #     if [ -f "$TARGET" ]; then
-  #       echo "Applying CAP_SYS_NICE to SteamVR..."
-  #       setcap CAP_SYS_NICE+ep "$TARGET"
-  #     fi
-  #   '';
-  #
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     User = "root"; # REQUIRED: Only root can set capabilities
-  #   };
-  # };
-
-  # programs.alvr.enable = true;
-  # programs.alvr.openFirewall = true;
-
-  # home-manager.users.kreejzak = {
-  #   xdg.enable = true;
-  #   xdg.configFile."openxr/1/active_runtime.json" = {
-  #     force = true;
-  #     text = ''
-  #       {
-  #         "file_format_version" : "1.0.0",
-  #         "runtime" : {
-  #           "VALVE_runtime_is_steamvr" : true,
-  #           "library_path" : "/home/kreejzak/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrclient.so",
-  #           "name" : "SteamVR"
-  #         }
-  #       }
-  #     '';
-  #   };
-  # };
-
+  # If you ever had services.monado = { ... }; → also set enable = false;
 }
