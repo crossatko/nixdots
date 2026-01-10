@@ -100,6 +100,7 @@ in
       yarn
 
       appimage-run
+      opencode
 
     ];
 
