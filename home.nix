@@ -203,6 +203,8 @@ in
         up = "make up";
         upd = "make up.d";
         down = "make down";
+        killdocker = "docker kill $(docker ps -q)";
+        kd = "docker kill $(docker ps -q)";
       };
     };
 
