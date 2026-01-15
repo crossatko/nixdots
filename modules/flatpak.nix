@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
 
   imports = [
     inputs.nix-flatpak.nixosModules.nix-flatpak
@@ -14,6 +15,7 @@
       "org.signal.Signal"
       "com.github.iwalton3.jellyfin-media-player"
       "io.github.benjamimgois.goverlay"
+      "com.github.taiko2k.tauonmb"
     ];
     update.onActivation = true;
   };
