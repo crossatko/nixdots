@@ -17,6 +17,7 @@ let
     tofi = "tofi";
     waybar = "waybar";
     opencode = "opencode";
+    wivrn = "wivrn";
   };
 in
 {

@@ -46,7 +46,6 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      package = pkgs.mesa;
       extraPackages = with pkgs; [
         rocmPackages.clr.icd
       ];

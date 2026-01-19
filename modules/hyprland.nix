@@ -4,16 +4,41 @@ let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   session = "start-hyprland";
   username = "kreejzak";
-
 in
 {
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # We explicitly set the portal package here so the module uses the correct one from the Flake
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
+
+  # --- XDG Portal Configuration ---
+  xdg.portal = {
+    enable = true;
+
+    # CRITICAL CHANGE: We removed xdg-desktop-portal-hyprland from here.
+    # programs.hyprland (above) adds it automatically. Adding it here caused the crash.
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
+
+    # We keep this to ensure screen sharing works
+    config = {
+      common = {
+        default = [ "gtk" ];
+      };
+      hyprland = {
+        default = [
+          "hyprland"
+          "gtk"
+        ];
+      };
+    };
+  };
+  # --------------------------------
 
   systemd.user.services.hypr-focus-daemon = {
     description = "Hyprland Focus Daemon";

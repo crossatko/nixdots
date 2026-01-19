@@ -1,31 +1,70 @@
 {
   pkgs,
-  config,
-  inputs,
   ...
 }:
 {
-  hardware.steam-hardware.enable = true;
-  boot.kernelModules = [ "hid-playstation" ];
+  services = {
+    wivrn = {
+      enable = true;
+      openFirewall = true;
 
-  # Keep this if you have AMD GPU → helps with CAP_SYS_NICE / async reprojection
+      defaultRuntime = true;
+
+      autoStart = true;
+
+    };
+
+    # udev.extraRules = ''
+    #   KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"
+    # '';
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      libva
+      libva-vdpau-driver
+      libvdpau-va-gl
+    ];
+  };
+
+  hardware.steam-hardware.enable = true;
+  boot.kernelModules = [
+    "hid-playstation"
+    "uinput"
+  ];
+
   boot.kernelPatches = [
     {
       name = "amdgpu-ignore-ctx-privileges";
       patch = pkgs.fetchpatch {
         name = "cap_sys_nice_begone.patch";
         url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
-        hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo="; # verify if still valid for your kernel
+        hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
       };
     }
   ];
 
+  environment.systemPackages = with pkgs; [
+    mangohud
+    gamescope
+    protonplus
+    bs-manager
+    sidequest
+    ffmpeg
+  ];
   programs = {
+
+    alvr = {
+      enable = true;
+      openFirewall = true;
+    };
+
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true; # Helps Steam Link discovery
-
+      localNetworkGameTransfers.openFirewall = true;
       gamescopeSession = {
         enable = true;
         args = [
@@ -46,29 +85,17 @@
         ];
       };
     };
-
     gamemode.enable = true;
+
+    nix-ld.enable = true;
+
+    nix-ld.libraries = with pkgs; [
+      libva
+      ffmpeg
+
+      libva
+      libva-vdpau-driver
+      libvdpau-va-gl
+    ];
   };
-
-  environment.systemPackages = with pkgs; [
-    mangohud
-    gamescope
-    protonplus
-    bs-manager
-
-    # Keep opencomposite if you ever want to test bypassing SteamVR compositor (optional)
-    # But for pure SteamVR → you can remove it later
-    opencomposite
-  ];
-
-  # === CRITICAL: DISABLE WiVRn completely ===
-  services.wivrn = {
-    enable = false; # ← Change to false
-    # Remove or comment out the rest of this block
-    # openFirewall = true;
-    # defaultRuntime = true;
-    # package = ...;
-  };
-
-  # If you ever had services.monado = { ... }; → also set enable = false;
 }
