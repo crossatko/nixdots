@@ -13,7 +13,6 @@
       "com.bambulab.BambuStudio"
       "com.obsproject.Studio"
       "org.signal.Signal"
-      "com.github.iwalton3.jellyfin-media-player"
       "io.github.benjamimgois.goverlay"
       "com.github.taiko2k.tauonmb"
     ];

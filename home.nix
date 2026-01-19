@@ -104,6 +104,9 @@ in
       appimage-run
       opencode
 
+      jellyfin-mpv-shim
+      jellyfin-media-player
+
     ];
 
   };
