@@ -107,6 +107,8 @@ in
       jellyfin-mpv-shim
       jellyfin-media-player
 
+      anki
+
     ];
 
   };
