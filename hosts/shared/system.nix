@@ -10,6 +10,11 @@
     };
   };
 
+  virtualisation.waydroid = {
+    enable = true;
+    package = pkgs.waydroid-nftables;
+  };
+
   nix.settings = {
     auto-optimise-store = true;
     experimental-features = [
@@ -27,6 +32,5 @@
   system = {
     stateVersion = "25.11";
   };
-
 
 }

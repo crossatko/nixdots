@@ -109,6 +109,8 @@ in
 
       anki
 
+      epiphany
+
     ];
 
   };
