@@ -51,7 +51,7 @@
           ./modules/hyprland.nix
           ./modules/gaming.nix
           ./modules/flatpak.nix
-          # ./modules/ai.nix
+          ./modules/ai.nix
 
           home-manager.nixosModules.home-manager
           {
