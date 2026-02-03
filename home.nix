@@ -108,8 +108,10 @@ in
       jellyfin-media-player
 
       anki
+      memento
 
       epiphany
+      discord
 
     ];
 

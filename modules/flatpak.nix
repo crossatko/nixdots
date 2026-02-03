@@ -8,13 +8,14 @@
   services.flatpak = {
     enable = true;
     packages = [
-      "com.discordapp.Discord"
+      # "com.discordapp.Discord"
       "org.localsend.localsend_app"
       "com.bambulab.BambuStudio"
       "com.obsproject.Studio"
       "org.signal.Signal"
       "io.github.benjamimgois.goverlay"
       "com.github.taiko2k.tauonmb"
+      "com.github.tchx84.Flatseal"
     ];
     update.onActivation = true;
   };

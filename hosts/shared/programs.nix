@@ -27,6 +27,9 @@
     python3
     nodejs
     jq
+    php
+    mariadb
+    redis
 
     libappindicator-gtk3
     libdbusmenu-gtk3
