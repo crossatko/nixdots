@@ -16,6 +16,7 @@
       "io.github.benjamimgois.goverlay"
       "com.github.taiko2k.tauonmb"
       "com.github.tchx84.Flatseal"
+      "com.usebottles.bottles"
     ];
     update.onActivation = true;
   };

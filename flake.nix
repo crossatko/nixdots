@@ -52,6 +52,7 @@
           ./modules/gaming.nix
           ./modules/flatpak.nix
           ./modules/ai.nix
+          ./modules/music.nix
 
           home-manager.nixosModules.home-manager
           {
