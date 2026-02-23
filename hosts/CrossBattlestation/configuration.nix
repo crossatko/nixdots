@@ -59,14 +59,4 @@
     firewall.allowedTCPPorts = [ 53317 ];
     firewall.allowedUDPPorts = [ 53317 ];
   };
-
-  environment.variables = {
-    AMD_VULKAN_ICD = "RADV";
-  };
-
-  environment.systemPackages = with pkgs; [
-    vulkan-tools
-    clinfo
-    pciutils
-  ];
 }

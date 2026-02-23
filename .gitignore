@@ -1,0 +1,16 @@
+# NixOS
+result
+result-*
+
+# Node modules (for opencode config)
+config/opencode/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

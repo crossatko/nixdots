@@ -33,17 +33,8 @@ in
       XDG_DATA_DIRS = "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
       GTK_USE_PORTAL = "1";
     };
-    file.".icons/Bibata-Modern-Classic".source =
-      "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
     stateVersion = "25.11";
-
-    pointerCursor = {
-      gtk.enable = true;
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-      size = 24;
-    };
 
     packages = with pkgs; [
       nerd-fonts.comic-shanns-mono
@@ -72,13 +63,11 @@ in
       gnome-disk-utility
       kdePackages.ktorrent
       libreoffice
-
       adwaita-icon-theme
       yaru-theme
       ubuntu-themes
       catppuccin-gtk
       catppuccin-kvantum
-
       vue-language-server
       vtsls
       typescript-language-server
@@ -86,7 +75,6 @@ in
       lazygit
       nodePackages.typescript
       statix
-
       kdePackages.ark
       zip
       unzip
@@ -94,39 +82,32 @@ in
       p7zip
       _7zz
       gzip
-
       playerctl
-
       python3
       nodejs
       yarn
-
       appimage-run
       opencode
-
       jellyfin-mpv-shim
       jellyfin-media-player
-
       anki
       memento
-
       epiphany
       discord
-
     ];
-
   };
 
   imports = [
     ./modules/home/nvim.nix
-    # inputs.nixvim.homeModules.nixvim
-    # ./modules/home/nixvim.nix
     ./modules/home/kitty.nix
     ./modules/home/tableplus.nix
+    ./modules/home/browsers.nix
+    ./modules/home/shell.nix
+    ./modules/home/themes.nix
+    ./modules/home/desktop-entries.nix
   ];
 
   programs = {
-
     gh = {
       enable = true;
       settings = {
@@ -146,125 +127,7 @@ in
       };
     };
 
-    brave = {
-      enable = true;
-      package = pkgs.brave;
-      extensions = [
-        { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
-        { id = "nhdogjmejiglipccpnnnanhbledajbpd"; } # Vue devtools
-        { id = "jabopobgcpjmedljpbcaablpmlmfcogm"; } # WhatFont
-        { id = "gebbhagfogifgggkldgodflihgfeippi"; } # Return Youtube Dislike
-        { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # SponsorBlock'
-        { id = "hkgfoiooedgoejojocmhlaklaeopbecg"; } # PiP
-        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
-        { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
-      ];
-      commandLineArgs = [
-        "--ozone-platform=wayland"
-        "--enable-features=UseOzonePlatform:Wayland"
-        "--disable-features=WaylandWpColorManagerV1"
-        "--enable-vulkan"
-      ];
-    };
-    firefox.enable = true;
-
-    git = {
-      enable = true;
-      settings = {
-        pull.rebase = true;
-        user = {
-          name = "Paul Cross";
-          email = "me@paulcross.cz";
-        };
-      };
-    };
-
     home-manager.enable = true;
-
-    bash = {
-      enable = true;
-    };
-
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-
-      oh-my-zsh = {
-        enable = true;
-        plugins = [
-          "git"
-          "sudo"
-        ];
-      };
-
-      shellAliases = {
-        # Nix stuff
-        udd = "update-desktop-database ~/.local/share/applications";
-        rb = "pushd ~/dotfiles && sudo nixos-rebuild switch --flake . && popd && udd";
-        rbu = "pushd ~/dotfiles && nix flake update && sudo nixos-rebuild switch --flake . && popd && udd";
-        nix-cleanup = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d";
-
-        # general
-        ":q" = "exit";
-
-        # webdev
-        up = "make up";
-        upd = "make up.d";
-        down = "make down";
-        killdocker = "docker kill $(docker ps -q)";
-        kd = "docker kill $(docker ps -q)";
-      };
-    };
-
-    starship = {
-      enable = true;
-      settings = {
-        add_newline = true;
-      };
-    };
-
-    fastfetch = {
-      enable = true;
-      settings = {
-        logo = {
-          source = "nixos_small";
-          padding = {
-            right = 1;
-          };
-        };
-        display = {
-          size = {
-            binaryPrefix = "si";
-          };
-          color = "blue";
-          separator = "   ";
-        };
-        modules = [
-          "title"
-          "separator"
-          "os"
-          "host"
-          "kernel"
-          "uptime"
-          "packages"
-          "shell"
-          "display"
-          "de"
-          "wm"
-          "terminal"
-          {
-            type = "cpu";
-            format = "{1} ({3}) @ {7} GHz";
-          }
-          "gpu"
-          "memory"
-          "break"
-          "colors"
-        ];
-      };
-    };
   };
 
   xdg = {
@@ -292,10 +155,6 @@ in
         recursive = true;
       }) configs)
       // {
-        "Kvantum/kvantum.kvconfig".text = ''
-          [General]
-          theme=Catppuccin-Mocha-Blue
-        '';
         "gtk-3.0/bookmarks".text = ''
           file:///home/${user}/Documents
           file:///home/${user}/Downloads
@@ -315,84 +174,6 @@ in
       pictures = "$HOME/Pictures";
       videos = "$HOME/Videos";
     };
-
-    desktopEntries = {
-      figma = {
-        name = "Figma";
-        exec = "${lib.getExe pkgs.brave} --app=https://www.figma.com";
-        icon = "brave-browser";
-        terminal = false;
-        categories = [ "Graphics" ];
-        settings = {
-          StartupWMClass = "www.figma.com";
-        };
-      };
-
-      linear = {
-        name = "Linear";
-        exec = "${lib.getExe pkgs.brave} --app=https://linear.app";
-        icon = "brave-browser";
-        terminal = false;
-        categories = [ "Office" ];
-        settings = {
-          StartupWMClass = "linear.app";
-        };
-      };
-
-      whatsapp = {
-        name = "WhatsApp";
-        exec = "${lib.getExe pkgs.brave} --app=https://web.whatsapp.com";
-        icon = "brave-browser";
-        terminal = false;
-        categories = [
-          "Network"
-          "Chat"
-        ];
-        settings = {
-          StartupWMClass = "web.whatsapp.com";
-        };
-      };
-    };
-  };
-
-  fonts.fontconfig.enable = true;
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-      cursor-theme = "Bibata-Modern-Classic";
-      icon-theme = "Yaru";
-    };
-  };
-
-  gtk = {
-    enable = true;
-
-    theme = {
-      name = "catppuccin-mocha-blue-standard+black";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "blue" ];
-        variant = "mocha";
-        tweaks = [ "black" ];
-      };
-    };
-
-    iconTheme = {
-      name = "Yaru";
-      package = pkgs.yaru-theme;
-    };
-
-    cursorTheme = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-      size = 24;
-    };
-  };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk";
-    style.name = "kvantum"; # Kvantum handles OLED themes for QT best
   };
 
   services.blueman-applet.enable = true;

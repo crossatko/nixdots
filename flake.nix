@@ -27,12 +27,28 @@
       nur,
       ...
     }@inputs:
+    let
+      baseModules = [
+        ./modules/hyprland.nix
+        ./modules/flatpak.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "backup";
+            users.kreejzak = import ./home.nix;
+            extraSpecialArgs = { inherit inputs; };
+          };
+        }
+      ];
+    in
     {
       nixosConfigurations.CrossBattlestation = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
 
-        modules = [
+        modules = baseModules ++ [
           (
             { config, pkgs, ... }:
             {
@@ -46,24 +62,10 @@
               };
             }
           )
-
           ./hosts/CrossBattlestation/configuration.nix
-          ./modules/hyprland.nix
           ./modules/gaming.nix
-          ./modules/flatpak.nix
           ./modules/ai.nix
           ./modules/music.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              users.kreejzak = import ./home.nix;
-              extraSpecialArgs = { inherit inputs; };
-            };
-          }
         ];
       };
 
@@ -71,7 +73,7 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
 
-        modules = [
+        modules = baseModules ++ [
           (
             { config, pkgs, ... }:
             {
@@ -80,21 +82,7 @@
               };
             }
           )
-
           ./hosts/CrossWorkstation/configuration.nix
-          ./modules/hyprland.nix
-          ./modules/flatpak.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              users.kreejzak = import ./home.nix;
-              extraSpecialArgs = { inherit inputs; };
-            };
-          }
         ];
       };
 
@@ -102,7 +90,7 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
 
-        modules = [
+        modules = baseModules ++ [
           (
             { config, pkgs, ... }:
             {
@@ -111,21 +99,7 @@
               };
             }
           )
-
           ./hosts/NixVM/configuration.nix
-          ./modules/hyprland.nix
-          ./modules/flatpak.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              users.kreejzak = import ./home.nix;
-              extraSpecialArgs = { inherit inputs; };
-            };
-          }
         ];
       };
     };
