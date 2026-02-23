@@ -128,6 +128,17 @@ in
     };
 
     home-manager.enable = true;
+
+    git = {
+      enable = true;
+      settings = {
+        pull.rebase = true;
+        user = {
+          name = "Paul Cross";
+          email = "me@paulcross.cz";
+        };
+      };
+    };
   };
 
   xdg = {
