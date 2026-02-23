@@ -146,10 +146,12 @@ in
       enable = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome # Added for Pika Backup background support
       ];
       config = {
         common = {
           default = [ "gtk" ];
+          "org.freedesktop.impl.portal.Background" = [ "gnome" ]; # Fallback routing
         };
         hyprland = {
           default = [
@@ -157,9 +159,11 @@ in
             "gtk"
           ];
           "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+          "org.freedesktop.impl.portal.Background" = [ "gnome" ]; # Explicitly route Background to GNOME
         };
       };
     };
+
     configFile =
       (builtins.mapAttrs (name: subpath: {
         source = create_symlink "${dotfiles}/${subpath}";
