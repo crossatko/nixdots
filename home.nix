@@ -90,7 +90,7 @@ in
       opencode
       jellyfin-mpv-shim
       jellyfin-media-player
-      anki
+      anki-bin
       memento
       epiphany
       discord
