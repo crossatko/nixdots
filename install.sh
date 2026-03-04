@@ -68,7 +68,7 @@ yay -S --needed --noconfirm "${PACKAGES[@]}"
 # Enable system services
 echo "Enabling system services..."
 sudo systemctl enable bluetooth
-sudo systemctl enable tailscale
+sudo systemctl enable --now tailscaled
 sudo systemctl enable ufw
 
 # Configure Firewall
