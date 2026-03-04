@@ -29,26 +29,25 @@ echo "Installing packages..."
 PACKAGES=(
   # Base development tools
   wget vim btop ffmpeg python nodejs jq php mariadb redis
-  libappindicator-gtk3 libdbusmenu libnotify ddcutil
+  libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
   desktop-file-utils
 
   # Fonts
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
 
   # Terminal & Shell
-  # (kitty is usually included by archinstall, but keeping it here is a safe fallback)
-  zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
+  neovim zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
 
   # Hyprland Ecosystem
-  hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync waybar
+  waybar hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
 
-  # GUI Apps
+  # GUI Apps (Swapped appimagelauncher for gearlever)
   thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
   gvfs gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
-  playerctl yarn anki brave-bin firefox discord
+  playerctl yarn gearlever anki brave-bin firefox discord
 
-  # 1Password
-  onepassword-cli 1password
+  # Security & Network
+  ufw onepassword-cli 1password
 
   # Graphics & Gaming
   mangohud gamescope proton-ge-custom-bin steam gamemode libva libva-vdpau-driver libvdpau-va-gl
@@ -60,10 +59,10 @@ PACKAGES=(
   lua-language-server stylua ripgrep fzf fd lazygit cargo tree-sitter nixfmt
   bash-language-server vscode-langservers-extracted marksman taplo
   inotify-tools prettier shfmt tailwindcss-language-server typescript-language-server
-  vue-language-server nvim
+  vue-language-server
 
   # Misc
-  tealdeer trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
+  tealdeer electron39-bin trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
 
   # Services
   blueman bluez bluez-utils
@@ -72,10 +71,17 @@ PACKAGES=(
 # Install all packages directly with yay
 yay -S --needed --noconfirm "${PACKAGES[@]}"
 
-# Enable services
-echo "Enabling services..."
+# Enable system services
+echo "Enabling system services..."
 sudo systemctl enable bluetooth
-# sudo systemctl enable tailscale
+sudo systemctl enable tailscale
+sudo systemctl enable ufw
+
+# Configure Firewall
+echo "Configuring UFW Firewall..."
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw --force enable
 
 # Copy config files
 echo "Copying config files..."
@@ -113,6 +119,10 @@ mkdir -p "$HOME/Documents" "$HOME/Downloads" "$HOME/Music" "$HOME/Pictures" "$HO
 
 # Update desktop database
 update-desktop-database ~/.local/share/applications 2>/dev/null || true
+
+# Clean up package cache to free up space
+echo "Cleaning up yay cache..."
+yay -Sc --noconfirm
 
 echo "Installation complete!"
 echo "You may need to:"
