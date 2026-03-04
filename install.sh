@@ -45,7 +45,7 @@ PACKAGES=(
   # GUI Apps
   thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
   gvfs gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
-  playerctl yarn appimagelauncher-bin anki brave-bin firefox discord
+  playerctl yarn anki brave-bin firefox discord
 
   # 1Password
   onepassword-cli 1password
