@@ -40,7 +40,7 @@ PACKAGES=(
   zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
 
   # Hyprland Ecosystem
-  hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
+  hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync waybar
 
   # GUI Apps
   thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
