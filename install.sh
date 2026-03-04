@@ -44,7 +44,7 @@ PACKAGES=(
   # GUI Apps (Swapped appimagelauncher for gearlever)
   thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
   gvfs gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
-  playerctl yarn gearlever anki brave-bin firefox discord
+  playerctl yarn dwarfs-bin gearlever anki brave-bin firefox discord
 
   # Security & Network
   ufw onepassword-cli 1password
