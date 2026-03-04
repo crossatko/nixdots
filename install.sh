@@ -60,7 +60,7 @@ PACKAGES=(
   lua-language-server stylua ripgrep fzf fd lazygit cargo tree-sitter nixfmt
   bash-language-server vscode-langservers-extracted marksman taplo
   inotify-tools prettier shfmt tailwindcss-language-server typescript-language-server
-  vue-language-server
+  vue-language-server nvim
 
   # Misc
   tealdeer trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
