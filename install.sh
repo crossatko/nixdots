@@ -28,7 +28,7 @@ echo "Installing packages..."
 # Define all packages in an array so we can cleanly use comments and newlines
 PACKAGES=(
   # Base development tools
-  wget vim btop ffmpeg python nodejs jq php mariadb redis
+  wget curl neovim vim btop ffmpeg python nodejs jq php mariadb redis
   libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
   desktop-file-utils
 
@@ -36,10 +36,10 @@ PACKAGES=(
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
 
   # Terminal & Shell
-  neovim zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
+  zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
 
   # Hyprland Ecosystem
-  waybar hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
+  waybar hyprland hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
 
   # GUI Apps (Swapped appimagelauncher for gearlever)
   thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
@@ -54,12 +54,6 @@ PACKAGES=(
 
   # Flatpak
   flatpak
-
-  # Neovim dependencies
-  lua-language-server stylua ripgrep fzf fd lazygit cargo tree-sitter nixfmt
-  bash-language-server vscode-langservers-extracted marksman taplo
-  inotify-tools prettier shfmt tailwindcss-language-server typescript-language-server
-  vue-language-server
 
   # Misc
   tealdeer electron39-bin trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
