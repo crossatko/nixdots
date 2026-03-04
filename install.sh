@@ -29,7 +29,7 @@ echo "Installing packages..."
 PACKAGES=(
   # Base development tools
   wget vim btop ffmpeg python nodejs jq php mariadb redis
-  libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
+  libappindicator-gtk3 libdbusmenu libnotify ddcutil
   desktop-file-utils
 
   # Fonts
@@ -75,7 +75,7 @@ yay -S --needed --noconfirm "${PACKAGES[@]}"
 # Enable services
 echo "Enabling services..."
 sudo systemctl enable bluetooth
-sudo systemctl enable tailscale
+# sudo systemctl enable tailscale
 
 # Copy config files
 echo "Copying config files..."
