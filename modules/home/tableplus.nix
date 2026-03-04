@@ -8,7 +8,7 @@ let
     inherit pname version;
     src = pkgs.fetchurl {
       url = "https://tableplus.com/release/linux/x64/TablePlus-x64.AppImage";
-      sha256 = "sha256-ARg6NGGZsVFdjqxKD/Ji0FK6wvRUsmsvIxbktah0ULo=";
+      sha256 = "sha256-jijtSh19fyzrIvRUW+HH/nbNlhgv0t8jMGzNG3eiqAA=";
     };
 
     extraPkgs =
