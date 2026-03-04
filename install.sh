@@ -11,25 +11,16 @@ sudo sed -i '/^#\[multilib\]/s/^#//' /etc/pacman.conf
 sudo sed -i '/^\[multilib\]/,/^#Include/s/^#Include/Include/' /etc/pacman.conf
 
 echo "Syncing repositories and installing prerequisites..."
-# We must sync (-Sy) because we just added the multilib repository,
-# and we need base-devel and git first to build yay from the AUR
 sudo pacman -Sy --needed --noconfirm base-devel git
 
-echo "Setting up AUR helper..."
-# Use yay/paru if available, otherwise install yay
-if command -v yay &>/dev/null; then
-  PACMAN=yay
-elif command -v paru &>/dev/null; then
-  PACMAN=paru
-else
-  echo "Installing yay..."
-  # Clean up any leftover directories from failed runs
+echo "Setting up yay..."
+if ! command -v yay &>/dev/null; then
+  echo "Installing yay from AUR..."
   rm -rf /tmp/yay
   git clone https://aur.archlinux.org/yay.git /tmp/yay
   cd /tmp/yay
   makepkg -si --noconfirm
   cd -
-  PACMAN=yay
 fi
 
 echo "Installing packages..."
@@ -37,19 +28,19 @@ echo "Installing packages..."
 # Define all packages in an array so we can cleanly use comments and newlines
 PACKAGES=(
   # Base development tools
-  wget git vim btop ffmpeg python nodejs jq php mariadb redis
+  wget vim btop ffmpeg python nodejs jq php mariadb redis
   libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
-  make gcc binutils desktop-file-utils
+  desktop-file-utils
 
   # Fonts
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
 
   # Terminal & Shell
+  # (kitty is usually included by archinstall, but keeping it here is a safe fallback)
   zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
 
-  # Hyprland & Wayland
-  hyprland hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi
-  swaync tuigreet greetd
+  # Hyprland Ecosystem
+  hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
 
   # GUI Apps
   thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
@@ -58,9 +49,6 @@ PACKAGES=(
 
   # 1Password
   onepassword-cli 1password
-
-  # Themes & Icons
-  catppuccin-gtk-theme-mocha catppuccin-kvantum bibata-cursors yaru kvantum
 
   # Graphics & Gaming
   mangohud gamescope proton-ge-custom-bin steam gamemode libva libva-vdpau-driver libvdpau-va-gl
@@ -74,20 +62,19 @@ PACKAGES=(
   inotify-tools prettier shfmt tailwindcss-language-server typescript-language-server
   vue-language-server
 
-  # Misc (Swapped to jellyfin-desktop to bypass qt5-webengine build)
-  tealdeer electron39-bin trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
+  # Misc
+  tealdeer trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
 
   # Services
   blueman bluez bluez-utils
 )
 
-# Install all packages
-$PACMAN -S --needed --noconfirm "${PACKAGES[@]}"
+# Install all packages directly with yay
+yay -S --needed --noconfirm "${PACKAGES[@]}"
 
 # Enable services
 echo "Enabling services..."
 sudo systemctl enable bluetooth
-sudo systemctl enable greetd
 sudo systemctl enable tailscale
 
 # Copy config files
