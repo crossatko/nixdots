@@ -74,8 +74,8 @@ PACKAGES=(
   inotify-tools prettier shfmt tailwindcss-language-server typescript-language-server
   vue-language-server
 
-  # Misc (Added electron39-bin to prevent compiling Chromium)
-  tealdeer electron39-bin trezor-suite-bin jellyfin-mpv-shim jellyfin-media-player epiphany
+  # Misc (Swapped to jellyfin-desktop to bypass qt5-webengine build)
+  tealdeer electron39-bin trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
 
   # Services
   blueman bluez bluez-utils
