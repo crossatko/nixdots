@@ -5,9 +5,15 @@ set -e
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$DOTFILES_DIR/config"
 
-echo "Installing prerequisites..."
-# We must install base-devel and git first to build yay from the AUR
-sudo pacman -S --needed --noconfirm base-devel git
+echo "Enabling multilib repository for 32-bit gaming packages..."
+# Uncomment [multilib] and the Include line directly below it
+sudo sed -i '/^#\[multilib\]/s/^#//' /etc/pacman.conf
+sudo sed -i '/^\[multilib\]/,/^#Include/s/^#Include/Include/' /etc/pacman.conf
+
+echo "Syncing repositories and installing prerequisites..."
+# We must sync (-Sy) because we just added the multilib repository,
+# and we need base-devel and git first to build yay from the AUR
+sudo pacman -Sy --needed --noconfirm base-devel git
 
 echo "Setting up AUR helper..."
 # Use yay/paru if available, otherwise install yay
@@ -78,7 +84,7 @@ PACKAGES=(
 # Install all packages
 $PACMAN -S --needed --noconfirm "${PACKAGES[@]}"
 
-# Enable services (added sudo)
+# Enable services
 echo "Enabling services..."
 sudo systemctl enable bluetooth
 sudo systemctl enable greetd
