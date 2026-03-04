@@ -38,23 +38,23 @@ echo "Installing packages..."
 PACKAGES=(
   # Base development tools
   wget git vim btop ffmpeg python nodejs jq php mariadb redis
-  libappindicator libdbusmenu libnotify ddcutil tailscale
+  libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
   make gcc binutils desktop-file-utils
 
   # Fonts
-  nerd-fonts-comic-shanns-mono noto-fonts noto-fonts-cjk
+  ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
 
   # Terminal & Shell
   zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
 
   # Hyprland & Wayland
   hyprland hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi
-  swaynotificationcenter tuigreet greetd
+  swaync tuigreet greetd
 
   # GUI Apps
-  thunderbird mpv swappy imv pavucontrol networkmanagerapplet yazi nautilus
+  thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
   gvfs gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
-  playerctl yarn appimage anki brave-bin firefox discord
+  playerctl yarn appimagelauncher-bin anki brave-bin firefox discord
 
   # 1Password
   onepassword-cli 1password
@@ -63,7 +63,7 @@ PACKAGES=(
   catppuccin-gtk-theme-mocha catppuccin-kvantum bibata-cursors yaru kvantum
 
   # Graphics & Gaming
-  mangohud gamescope proton-ge-custom steam gamemode libva libva-vdpau-driver libvdpau-va-gl
+  mangohud gamescope proton-ge-custom-bin steam gamemode libva libva-vdpau-driver libvdpau-va-gl
 
   # Flatpak
   flatpak
@@ -75,7 +75,7 @@ PACKAGES=(
   vue-language-server
 
   # Misc
-  tldr trezor-suite jellyfin-mpv-shim jellyfin-media-player epiphany
+  tealdeer trezor-suite-bin jellyfin-mpv-shim jellyfin-media-player epiphany
 
   # Services
   blueman bluez bluez-utils
