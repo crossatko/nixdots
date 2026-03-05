@@ -29,8 +29,7 @@ echo "Installing packages..."
 PACKAGES=(
   # Base development tools
   wget curl neovim vim btop ffmpeg python nodejs jq php mariadb redis yarn
-  libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
-  desktop-file-utils
+  libappindicator-gtk3 ddcutil tailscale
 
   # Fonts
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
@@ -47,10 +46,10 @@ PACKAGES=(
   playerctl anki
 
   # Security & Network
-  ufw onepassword-cli 1password brave-bin firefox epiphany
+  ufw 1password brave-bin firefox epiphany
 
   # Graphics & Gaming
-  mangohud gamescope proton-ge-custom-bin steam gamemode libva libva-vdpau-driver libvdpau-va-gl
+  mangohud gamescope steam gamemode
 
   # Containers & Virtualization
   docker docker-compose
