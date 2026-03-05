@@ -134,10 +134,6 @@ file:///home/kreejzak/Videos
 file:///home/kreejzak/code
 EOF
 
-# Create symlink for dotfiles config
-mkdir -p "$HOME/dotfiles"
-ln -sf "$CONFIG_DIR" "$HOME/dotfiles/config"
-
 # Set default shell to zsh
 echo "Changing default shell to zsh..."
 chsh -s /bin/zsh
