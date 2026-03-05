@@ -111,7 +111,7 @@ echo "QT_QPA_PLATFORMTHEME=gtk3" | sudo tee -a /etc/environment # Forces Qt to u
 echo "Symlinking config files..."
 mkdir -p "$HOME/.config"
 
-CONFIG_APPS=("hypr" "nvim" "zellij" "tofi" "waybar" "opencode" "wivrn")
+CONFIG_APPS=("hypr" "nvim" "kitty" "zellij" "tofi" "waybar" "opencode" "wivrn")
 
 for app in "${CONFIG_APPS[@]}"; do
   TARGET="$HOME/.config/$app"
