@@ -43,14 +43,17 @@ PACKAGES=(
 
   # GUI Apps (Swapped appimagelauncher for gearlever)
   thunderbird mpv pavucontrol network-manager-applet yazi nautilus
-  gvfs gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
-  playerctl dwarfs-bin gearlever anki
+  gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
+  playerctl anki
 
   # Security & Network
   ufw onepassword-cli 1password brave-bin firefox epiphany
 
   # Graphics & Gaming
   mangohud gamescope proton-ge-custom-bin steam gamemode libva libva-vdpau-driver libvdpau-va-gl
+
+  # Containers & Virtualization
+  docker docker-compose
 
   # Flatpak
   flatpak
@@ -69,6 +72,7 @@ yay -S --needed --noconfirm "${PACKAGES[@]}"
 echo "Enabling system services..."
 sudo systemctl enable bluetooth
 sudo systemctl enable --now tailscaled
+sudo systemctl enable --now docker
 sudo systemctl enable ufw
 
 # Configure Firewall
@@ -77,22 +81,36 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw --force enable
 
+# Setup Docker permissions
+echo "Configuring Docker permissions..."
+sudo usermod -aG docker "$USER"
+
 # Setup Flathub and install Flatpak apps
 echo "Configuring Flathub and installing Discord & Spotify..."
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 sudo flatpak install -y flathub com.discordapp.Discord com.spotify.Client
 
-# Copy config files
-echo "Copying config files..."
+# Symlink config files with backup logic
+echo "Symlinking config files..."
 mkdir -p "$HOME/.config"
 
-cp -r "$CONFIG_DIR/hypr" "$HOME/.config/"
-cp -r "$CONFIG_DIR/nvim" "$HOME/.config/"
-cp -r "$CONFIG_DIR/zellij" "$HOME/.config/"
-cp -r "$CONFIG_DIR/tofi" "$HOME/.config/"
-cp -r "$CONFIG_DIR/waybar" "$HOME/.config/"
-cp -r "$CONFIG_DIR/opencode" "$HOME/.config/"
-cp -r "$CONFIG_DIR/wivrn" "$HOME/.config/"
+CONFIG_APPS=("hypr" "nvim" "zellij" "tofi" "waybar" "opencode" "wivrn")
+
+for app in "${CONFIG_APPS[@]}"; do
+  TARGET="$HOME/.config/$app"
+  SOURCE="$CONFIG_DIR/$app"
+
+  # Check if the target already exists (as a file, directory, or even a broken symlink)
+  if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
+    echo "  Backing up existing $app to ${app}_backup..."
+    # Remove older backup if it exists so mv doesn't fail or nest folders
+    rm -rf "${TARGET}_backup"
+    mv "$TARGET" "${TARGET}_backup"
+  fi
+
+  echo "  Symlinking $app..."
+  ln -s "$SOURCE" "$TARGET"
+done
 
 # GTK bookmarks
 mkdir -p "$HOME/.config/gtk-3.0"
@@ -122,8 +140,7 @@ update-desktop-database ~/.local/share/applications 2>/dev/null || true
 # Clean up package cache to free up space
 echo "Cleaning up yay cache..."
 yay -Sc --noconfirm
+fc-cache -fv
 
 echo "Installation complete!"
-echo "You may need to:"
-echo "  1. Log out and log back in"
-echo "  2. Run 'fc-cache -fv' to refresh fonts"
+echo "You may need to log out and log back in (required to apply Docker permissions)"
