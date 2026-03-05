@@ -28,7 +28,7 @@ echo "Installing packages..."
 # Define all packages in an array so we can cleanly use comments and newlines
 PACKAGES=(
   # Base development tools
-  wget curl neovim vim btop ffmpeg python nodejs jq php mariadb redis
+  wget curl neovim vim btop ffmpeg python nodejs jq php mariadb redis yarn
   libappindicator-gtk3 libdbusmenu libnotify ddcutil tailscale
   desktop-file-utils
 
@@ -42,12 +42,12 @@ PACKAGES=(
   waybar hyprland hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
 
   # GUI Apps (Swapped appimagelauncher for gearlever)
-  thunderbird mpv swappy imv pavucontrol network-manager-applet yazi nautilus
+  thunderbird mpv pavucontrol network-manager-applet yazi nautilus
   gvfs gnome-disk-utility libreoffice-fresh ark zip unzip unrar p7zip gzip
-  playerctl yarn dwarfs-bin gearlever anki brave-bin firefox discord
+  playerctl dwarfs-bin gearlever anki
 
   # Security & Network
-  ufw onepassword-cli 1password
+  ufw onepassword-cli 1password brave-bin firefox epiphany
 
   # Graphics & Gaming
   mangohud gamescope proton-ge-custom-bin steam gamemode libva libva-vdpau-driver libvdpau-va-gl
@@ -56,7 +56,7 @@ PACKAGES=(
   flatpak
 
   # Misc
-  tealdeer electron39-bin trezor-suite-bin jellyfin-mpv-shim jellyfin-desktop epiphany
+  tldr
 
   # Services
   blueman bluez bluez-utils
@@ -76,6 +76,11 @@ echo "Configuring UFW Firewall..."
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw --force enable
+
+# Setup Flathub and install Flatpak apps
+echo "Configuring Flathub and installing Discord & Spotify..."
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+sudo flatpak install -y flathub com.discordapp.Discord com.spotify.Client
 
 # Copy config files
 echo "Copying config files..."
@@ -122,4 +127,3 @@ echo "Installation complete!"
 echo "You may need to:"
 echo "  1. Log out and log back in"
 echo "  2. Run 'fc-cache -fv' to refresh fonts"
-echo "  3. Configure flatpak: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
