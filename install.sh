@@ -40,6 +40,7 @@ PACKAGES=(
 
   # Hyprland Ecosystem
   waybar hyprland hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
+  xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 
   # GUI Apps (Swapped appimagelauncher for gearlever)
   thunderbird mpv pavucontrol network-manager-applet yazi nautilus
