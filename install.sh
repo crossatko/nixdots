@@ -166,6 +166,7 @@ alias udd="update-desktop-database ~/.local/share/applications"
 alias nix-cleanup="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d"
 
 alias :q="exit"
+alias vim="nvim"
 alias up="make up"
 alias upd="make up.d"
 alias down="make down"
