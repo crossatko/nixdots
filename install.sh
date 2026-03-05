@@ -89,6 +89,18 @@ echo "Configuring Flathub and installing Discord & Spotify..."
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 sudo flatpak install -y flathub com.discordapp.Discord com.spotify.Client
 
+# System-wide Environment Variable setup via Hostname
+RAW_HOSTNAME=$(hostname)
+FORMATTED_HOST=$(echo "$RAW_HOSTNAME" | sed 's/\([a-z0-9]\)\([A-Z]\)/\1_\2/g' | sed 's/-/_/g' | tr '[:lower:]' '[:upper:]')
+HOST_VAR="HOST_${FORMATTED_HOST}"
+
+echo "Detected hostname '$RAW_HOSTNAME'. Setting system-wide environment variable $HOST_VAR=1..."
+
+# Clean up any existing HOST_ variables to prevent conflicts
+sudo sed -i '/^HOST_/d' /etc/environment
+# Add the new dynamic variable
+echo "$HOST_VAR=1" | sudo tee -a /etc/environment
+
 # Symlink config files with backup logic
 echo "Symlinking config files..."
 mkdir -p "$HOME/.config"
@@ -142,4 +154,4 @@ yay -Sc --noconfirm
 fc-cache -fv
 
 echo "Installation complete!"
-echo "You may need to log out and log back in (required to apply Docker permissions)"
+echo "You may need to log out and log back in (required to apply Docker permissions and the new $HOST_VAR environment variable)"
