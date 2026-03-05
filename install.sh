@@ -88,7 +88,10 @@ sudo usermod -aG docker "$USER"
 # Setup Flathub and install Flatpak apps
 echo "Configuring Flathub and installing Discord & Spotify..."
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-sudo flatpak install -y flathub com.discordapp.Discord com.spotify.Client
+flatpak install -y flathub com.discordapp.Discord
+flatpak install -y flathub com.spotify.Client
+flatpak install -y flathub org.jellyfin.JellyfinDesktop
+flatpak install -y flathub com.vysp3r.ProtonPlus
 
 # System-wide Environment Variable setup via Hostname
 RAW_HOSTNAME=$(cat /etc/hostname | tr -d '\n')
@@ -182,7 +185,41 @@ EOF
 echo "Changing default shell to zsh..."
 chsh -s /bin/zsh
 
-# Update desktop database
+# --- WEB APPS SETUP ---
+echo "Creating Brave Web Apps..."
+
+create_brave_webapp() {
+  local app_name="$1"
+  local app_url="$2"
+  # Default to the brave icon if a specific one isn't passed
+  local app_icon="${3:-brave}"
+
+  # Format the filename to be lowercase and replace spaces with underscores
+  local filename=$(echo "$app_name" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+  local filepath="$HOME/.local/share/applications/webapp_${filename}.desktop"
+
+  echo "  Adding $app_name ($app_url)..."
+  mkdir -p "$HOME/.local/share/applications"
+
+  cat >"$filepath" <<EOF
+[Desktop Entry]
+Version=1.0
+Name=$app_name
+Exec=brave --app="$app_url"
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;
+Icon=$app_icon
+StartupNotify=true
+EOF
+}
+
+# Create specific web apps here
+create_brave_webapp "Figma" "https://www.figma.com"
+create_brave_webapp "Linear" "https://linear.app"
+
+# Update desktop database so the new web apps (and anything else) appear in your launcher (Tofi)
+echo "Updating desktop database..."
 update-desktop-database ~/.local/share/applications 2>/dev/null || true
 
 # Clean up package cache to free up space
