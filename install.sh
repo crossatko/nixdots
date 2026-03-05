@@ -36,6 +36,7 @@ PACKAGES=(
 
   # Terminal & Shell
   zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
+  zsh-autosuggestions zsh-syntax-highlighting
 
   # Hyprland Ecosystem
   waybar hyprland hyprpaper hypridle hyprlock hyprpolkitagent hyprshot tofi swaync
@@ -95,10 +96,7 @@ FORMATTED_HOST=$(echo "$RAW_HOSTNAME" | sed 's/\([a-z0-9]\)\([A-Z]\)/\1_\2/g' | 
 HOST_VAR="HOST_${FORMATTED_HOST}"
 
 echo "Detected hostname '$RAW_HOSTNAME'. Setting system-wide environment variable $HOST_VAR=1..."
-
-# Clean up any existing HOST_ variables to prevent conflicts
 sudo sed -i '/^HOST_/d' /etc/environment
-# Add the new dynamic variable
 echo "$HOST_VAR=1" | sudo tee -a /etc/environment
 
 # Symlink config files with backup logic
@@ -111,10 +109,8 @@ for app in "${CONFIG_APPS[@]}"; do
   TARGET="$HOME/.config/$app"
   SOURCE="$CONFIG_DIR/$app"
 
-  # Check if the target already exists (as a file, directory, or even a broken symlink)
   if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
     echo "  Backing up existing $app to ${app}_backup..."
-    # Remove older backup if it exists so mv doesn't fail or nest folders
     rm -rf "${TARGET}_backup"
     mv "$TARGET" "${TARGET}_backup"
   fi
@@ -134,12 +130,57 @@ file:///home/kreejzak/Videos
 file:///home/kreejzak/code
 EOF
 
+# Create user directories
+mkdir -p "$HOME/Documents" "$HOME/Downloads" "$HOME/Music" "$HOME/Pictures" "$HOME/Videos" "$HOME/code"
+
+# --- ZSH & STARSHIP SETUP ---
+echo "Configuring Zsh, Oh My Zsh, and Starship..."
+
+# Install Oh My Zsh non-interactively
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# Generate .zshrc
+cat >"$HOME/.zshrc" <<'EOF'
+# Oh My Zsh configuration
+export ZSH="$HOME/.oh-my-zsh"
+plugins=(git sudo)
+source $ZSH/oh-my-zsh.sh
+
+# Arch Linux specific plugin paths for syntax highlighting and autosuggestions
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Enable completions
+autoload -Uz compinit
+compinit
+
+# Aliases
+alias udd="update-desktop-database ~/.local/share/applications"
+
+# Nix-specific Alias (Only works if Nix package manager is installed on this Arch system)
+alias nix-cleanup="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d"
+
+alias :q="exit"
+alias up="make up"
+alias upd="make up.d"
+alias down="make down"
+alias killdocker='docker kill $(docker ps -q)'
+alias kd='docker kill $(docker ps -q)'
+
+# Initialize Starship
+eval "$(starship init zsh)"
+EOF
+
+# Generate starship.toml
+cat >"$HOME/.config/starship.toml" <<'EOF'
+add_newline = true
+EOF
+
 # Set default shell to zsh
 echo "Changing default shell to zsh..."
 chsh -s /bin/zsh
-
-# Create user directories
-mkdir -p "$HOME/Documents" "$HOME/Downloads" "$HOME/Music" "$HOME/Pictures" "$HOME/Videos" "$HOME/code"
 
 # Update desktop database
 update-desktop-database ~/.local/share/applications 2>/dev/null || true
