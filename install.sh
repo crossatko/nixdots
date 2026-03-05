@@ -90,7 +90,7 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 sudo flatpak install -y flathub com.discordapp.Discord com.spotify.Client
 
 # System-wide Environment Variable setup via Hostname
-RAW_HOSTNAME=$(hostname)
+RAW_HOSTNAME=$(cat /etc/hostname | tr -d '\n')
 FORMATTED_HOST=$(echo "$RAW_HOSTNAME" | sed 's/\([a-z0-9]\)\([A-Z]\)/\1_\2/g' | sed 's/-/_/g' | tr '[:lower:]' '[:upper:]')
 HOST_VAR="HOST_${FORMATTED_HOST}"
 
