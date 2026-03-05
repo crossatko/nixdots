@@ -29,7 +29,7 @@ echo "Installing packages..."
 PACKAGES=(
   # Base development tools
   wget curl neovim vim btop ffmpeg python nodejs jq php mariadb redis yarn
-  libappindicator-gtk3 ddcutil tailscale
+  libappindicator-gtk3 ddcutil tailscale tableplus
 
   # Fonts
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
