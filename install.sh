@@ -33,7 +33,7 @@ PACKAGES=(
 
   # Fonts & Theming
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
-  gnome-themes-extra qt5-wayland qt6-wayland
+  gnome-themes-extra qt5-wayland qt6-wayland dconf
 
   # Terminal & Shell
   zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
@@ -131,7 +131,7 @@ done
 echo "Applying GTK Dark Theme and Icons..."
 mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
 
-# GTK 3 settings
+# 1. Legacy GTK 3 & 4 settings.ini (Still needed for some older apps)
 cat >"$HOME/.config/gtk-3.0/settings.ini" <<EOF
 [Settings]
 gtk-theme-name=Adwaita-dark
@@ -140,15 +140,19 @@ gtk-cursor-theme-name=Bibata-Modern-Classic
 gtk-application-prefer-dark-theme=1
 EOF
 
-# GTK 4 settings (exact same as GTK 3)
 cp "$HOME/.config/gtk-3.0/settings.ini" "$HOME/.config/gtk-4.0/settings.ini"
 
-# GTK 2 settings (Legacy fallback)
 cat >"$HOME/.gtkrc-2.0" <<EOF
 gtk-theme-name="Adwaita-dark"
 gtk-icon-theme-name="Adwaita"
 gtk-cursor-theme-name="Bibata-Modern-Classic"
 EOF
+
+# 2. Modern GTK4 / libadwaita standard gsettings (This fixes GTK4 dark mode)
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
+gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic'
 
 # GTK bookmarks
 cat >"$HOME/.config/gtk-3.0/bookmarks" <<'EOF'
