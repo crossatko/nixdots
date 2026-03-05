@@ -31,8 +31,9 @@ PACKAGES=(
   wget curl neovim vim btop ffmpeg python nodejs jq php mariadb redis yarn
   libappindicator-gtk3 ddcutil tailscale tableplus
 
-  # Fonts
+  # Fonts & Theming
   ttf-comic-shanns-nerd noto-fonts noto-fonts-cjk
+  gnome-themes-extra qt5-wayland qt6-wayland
 
   # Terminal & Shell
   zellij wl-clipboard kitty zsh starship fastfetch bash-completion zsh-completions
@@ -100,9 +101,11 @@ RAW_HOSTNAME=$(cat /etc/hostname | tr -d '\n')
 FORMATTED_HOST=$(echo "$RAW_HOSTNAME" | sed 's/\([a-z0-9]\)\([A-Z]\)/\1_\2/g' | sed 's/-/_/g' | tr '[:lower:]' '[:upper:]')
 HOST_VAR="HOST_${FORMATTED_HOST}"
 
-echo "Detected hostname '$RAW_HOSTNAME'. Setting system-wide environment variable $HOST_VAR=1..."
+echo "Detected hostname '$RAW_HOSTNAME'. Setting system-wide environment variables..."
 sudo sed -i '/^HOST_/d' /etc/environment
+sudo sed -i '/^QT_QPA_PLATFORMTHEME/d' /etc/environment
 echo "$HOST_VAR=1" | sudo tee -a /etc/environment
+echo "QT_QPA_PLATFORMTHEME=gtk3" | sudo tee -a /etc/environment # Forces Qt to use GTK styling
 
 # Symlink config files with backup logic
 echo "Symlinking config files..."
@@ -124,8 +127,30 @@ for app in "${CONFIG_APPS[@]}"; do
   ln -s "$SOURCE" "$TARGET"
 done
 
+# --- THEMING SETUP ---
+echo "Applying GTK Dark Theme and Icons..."
+mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
+
+# GTK 3 settings
+cat >"$HOME/.config/gtk-3.0/settings.ini" <<EOF
+[Settings]
+gtk-theme-name=Adwaita-dark
+gtk-icon-theme-name=Adwaita
+gtk-cursor-theme-name=Bibata-Modern-Classic
+gtk-application-prefer-dark-theme=1
+EOF
+
+# GTK 4 settings (exact same as GTK 3)
+cp "$HOME/.config/gtk-3.0/settings.ini" "$HOME/.config/gtk-4.0/settings.ini"
+
+# GTK 2 settings (Legacy fallback)
+cat >"$HOME/.gtkrc-2.0" <<EOF
+gtk-theme-name="Adwaita-dark"
+gtk-icon-theme-name="Adwaita"
+gtk-cursor-theme-name="Bibata-Modern-Classic"
+EOF
+
 # GTK bookmarks
-mkdir -p "$HOME/.config/gtk-3.0"
 cat >"$HOME/.config/gtk-3.0/bookmarks" <<'EOF'
 file:///home/kreejzak/Documents
 file:///home/kreejzak/Downloads
@@ -231,4 +256,4 @@ yay -Sc --noconfirm
 fc-cache -fv
 
 echo "Installation complete!"
-echo "You may need to log out and log back in (required to apply Docker permissions and the new $HOST_VAR environment variable)"
+echo "You may need to log out and log back in (required to apply Docker permissions, theming, and the new $HOST_VAR environment variable)"
