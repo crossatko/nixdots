@@ -1,0 +1,64 @@
+
+# Alacritty Configuration
+
+[window]
+padding = { x = 0, y = 0 }
+dynamic_title = true
+opacity = 0.8
+# For Linux/BSD to ensure opacity works
+decorations = "full"
+
+[scrolling]
+history = 10000
+
+[font]
+size = 18.0
+
+[font.offset]
+x = 0
+y = -2  # Increase this for more space between lines, decrease for less
+
+[font.normal]
+family = "ComicCodeLigatures Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "ComicCodeLigatures Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "ComicCodeLigatures Nerd Font Mono"
+style = "Italic"
+
+[colors.primary]
+background = "#000000"
+foreground = "#cdd6f4"
+bright_foreground = "#cdd6f4"
+
+[colors.cursor]
+text = "#1e1e2e"
+cursor = "#f5e0dc"
+
+[colors.selection]
+text = "#1e1e2e"
+background = "#cdd6f4"
+
+[colors.normal]
+black   = "#45475a"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#f5c2e7"
+cyan    = "#94e2d5"
+white   = "#bac2de"
+
+[colors.bright]
+black   = "#585b70"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#f5c2e7"
+cyan    = "#94e2d5"
+white   = "#a6adc8"
