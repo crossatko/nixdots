@@ -62,3 +62,10 @@ export NVM_DIR="$HOME/.nvm"
 
 # Initialize Starship
 eval "$(starship init zsh)"
+
+# bun completions
+[ -s "/home/kreejzak/.bun/_bun" ] && source "/home/kreejzak/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
