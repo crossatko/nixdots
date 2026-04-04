@@ -6,7 +6,7 @@ padding-left = 35%
 padding-top = 30%
 result-spacing = 10
 num-results = 8
-font = "ComicCodeLigatures Nerd Font Mono"
+font = "TX-02"
 font-size = 24
 
 # Theme: Rose Pine

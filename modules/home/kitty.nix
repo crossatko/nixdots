@@ -44,7 +44,7 @@
       color15 = "#a6adc8";
     };
 
-    font.name = "ComicShannsMono Nerd Font";
+    font.name = "TX-02";
 
   };
 
