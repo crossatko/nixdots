@@ -1,0 +1,8 @@
+layout {
+  pane command="zsh" close_on_exit=true {
+    args "-c" "nvim; exec zsh"
+  }
+  pane size=1 borderless=true {
+    plugin location="compact-bar"
+  }
+}

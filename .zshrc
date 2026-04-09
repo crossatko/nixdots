@@ -18,7 +18,29 @@ alias udd="update-desktop-database ~/.local/share/applications"
 alias nix-cleanup="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d"
 
 alias :q="exit"
-alias vim="nvim"
+vim() {
+  if [ -n "$ZELLIJ" ]; then
+    nvim "$@"
+  else
+    if [ $# -eq 0 ]; then
+      zellij -l nvim
+    else
+      local args=""
+      for arg in "$@"; do
+        args="${args} \"${arg}\""
+      done
+      zellij --layout-string "
+layout {
+  pane command=\"zsh\" close_on_exit=true {
+    args \"-c\" \"nvim${args}; exec zsh\"
+  }
+  pane size=1 borderless=true {
+    plugin location=\"compact-bar\"
+  }
+}"
+    fi
+  fi
+}
 alias up="make up"
 alias upd="make up.d"
 alias down="make down"
@@ -69,3 +91,8 @@ eval "$(starship init zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/kreejzak/.lmstudio/bin"
+# End of LM Studio CLI section
+
