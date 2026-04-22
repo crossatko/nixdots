@@ -73,6 +73,34 @@ StartupNotify=true
 EOF
 }
 
+# Convert all images in current directory to WebP
+webp-all() {
+  # Enable extended globbing (for #i) and nullglob (to avoid "no matches" errors)
+  # 'localoptions' ensures these settings don't affect your whole shell session
+  setopt localoptions extendedglob nullglob
+
+  if ! command -v magick &> /dev/null; then
+    echo "Error: ImageMagick is not installed."
+    return 1
+  fi
+
+  # Find files. Now this will silently skip if a format is missing.
+  local files=(*.(#i)(jpg|jpeg|png|tiff))
+
+  if (( ${#files} == 0 )); then
+    echo "No matching images found in the current directory."
+    return 0
+  fi
+
+  for file in "${files[@]}"; do
+    local output="${file%.*}.webp"
+    echo "Converting: $file -> $output"
+    magick "$file" -quality 75 "$output"
+  done
+
+  echo "Conversion complete!"
+}
+
 # Set NVM's home directory
 export NVM_DIR="$HOME/.nvm"
 
@@ -96,3 +124,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$PATH:/home/kreejzak/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
+if [ -e /home/kreejzak/.nix-profile/etc/profile.d/nix.sh ]; then . /home/kreejzak/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
