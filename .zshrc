@@ -103,4 +103,5 @@ export PATH="$PATH:/home/kreejzak/.lmstudio/bin"
 # End of LM Studio CLI section
 
 
-if [ -e /home/kreejzak/.nix-profile/etc/profile.d/nix.sh ]; then . /home/kreejzak/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/kreejzak/.nix-profile/etc/profile.d/nix.sh ]; then . /home/kreejzak/.nix-profile/etc/profile.d/nix.sh; fi
+export PATH="$HOME/.local/bin:$PATH"
