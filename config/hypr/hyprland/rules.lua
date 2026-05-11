@@ -157,7 +157,11 @@ hl.window_rule({
 	match = { class = "^(.blueman-manager-wrapped)$" },
 })
 
-hl.window_rule({ name = "discord", workspace = "7", match = { class = "^(discord|discord-canary)$" } })
+hl.window_rule({
+	name = "discord",
+	workspace = "7",
+	match = { class = "discord" },
+})
 hl.window_rule({ name = "thunderbird", workspace = "8", match = { class = "thunderbird" } })
 hl.window_rule({ name = "whatsapp", workspace = "7", match = { class = "^(brave-web\\.whatsapp\\.com__-Default)$" } })
 hl.window_rule({ name = "messages", workspace = "7", match = { class = "^(brave-messages\\.google\\.com__-Default)$" } })

@@ -4,17 +4,32 @@ local monitors = require("hyprland.monitors")
 local monitor1 = monitors.primary
 local monitor2 = monitors.secondary
 
-hl.workspace_rule({ workspace = "1", monitor = monitor1.output })
-hl.workspace_rule({ workspace = "2", monitor = monitor1.output })
-hl.workspace_rule({ workspace = "3", monitor = monitor1.output, on_created_empty = apps.browser, default = true })
-hl.workspace_rule({ workspace = "4", monitor = monitor1.output, on_created_empty = apps.terminal })
+local workspaces = {
+	{ id = "1", key = "a", monitor = monitor1.output },
+	{ id = "2", key = "s", monitor = monitor1.output },
+	{ id = "3", key = "d", monitor = monitor1.output, app = apps.browser, default = true },
+	{ id = "4", key = "f", monitor = monitor1.output, app = apps.terminal },
 
-hl.workspace_rule({ workspace = "5", monitor = monitor2.output })
-hl.workspace_rule({ workspace = "6", monitor = monitor2.output })
-hl.workspace_rule({ workspace = "7", monitor = monitor2.output, on_created_empty = apps.discord, default = true })
-hl.workspace_rule({ workspace = "8", monitor = monitor2.output, on_created_empty = apps.mail })
+	{ id = "5", key = "q", monitor = monitor2.output },
+	{ id = "6", key = "w", monitor = monitor2.output },
+	{ id = "7", key = "e", monitor = monitor2.output, app = apps.discord, default = true },
+	{ id = "8", key = "r", monitor = monitor2.output, app = apps.mail },
 
-hl.workspace_rule({ workspace = "9", monitor = monitor1.output })
-hl.workspace_rule({ workspace = "10", monitor = monitor1.output })
-hl.workspace_rule({ workspace = "11", monitor = monitor1.output })
-hl.workspace_rule({ workspace = "12", monitor = monitor1.output, on_created_empty = apps.jellyfin })
+	{ id = "9", key = "z", monitor = monitor1.output },
+	{ id = "10", key = "x", monitor = monitor1.output },
+	{ id = "11", key = "c", monitor = monitor1.output },
+	{ id = "12", key = "v", monitor = monitor1.output, app = apps.jellyfin },
+}
+
+for _, ws in ipairs(workspaces) do
+	hl.workspace_rule({
+		workspace = ws.id,
+		monitor = ws.monitor,
+		on_created_empty = ws.app,
+		default = ws.default or false,
+	})
+end
+
+return {
+	workspaces = workspaces,
+}

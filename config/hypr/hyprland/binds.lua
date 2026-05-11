@@ -1,84 +1,102 @@
 local apps = require("hyprland.apps")
+local workspaces = require("hyprland.workspaces")
 
 local mod = "SUPER"
 local alt = "ALT"
-local modalt = mod .. " + " .. alt
 
-hl.bind("Print", hl.dsp.exec_cmd(apps.screenshot))
-hl.bind(mod .. " + D", hl.dsp.exec_cmd(apps.menu))
-hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | tofi | cliphist decode | wl-copy"))
+local exec = hl.dsp.exec_cmd
 
-hl.bind(mod .. " + Return", hl.dsp.exec_cmd(apps.terminal))
-hl.bind(mod .. " + B", hl.dsp.exec_cmd(apps.browser))
-hl.bind(mod .. " + E", hl.dsp.exec_cmd(apps.filemanager))
-hl.bind(mod .. " + W", hl.dsp.exec_cmd(apps.whatsapp))
-hl.bind(mod .. " + M", hl.dsp.exec_cmd(apps.messages))
-
-hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.close())
-hl.bind(mod .. " + SHIFT + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/leave_computer.sh"))
-hl.bind(mod .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
-
-hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
-hl.bind(mod .. " + SHIFT + F", hl.dsp.exec_cmd("hyprctl dispatch fullscreenstate 1"))
-hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mod .. " + P", hl.dsp.window.pin({ action = "toggle" }))
-hl.bind(mod .. " + X", hl.dsp.layout("togglesplit"))
-
-hl.bind(mod .. " + G", hl.dsp.exec_cmd("hyprctl dispatch togglegroup"))
-hl.bind(mod .. " + TAB", hl.dsp.exec_cmd("hyprctl dispatch changegroupactive f"))
-
-hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"))
-
-hl.bind(mod .. " + h", hl.dsp.focus({ direction = "left" }))
-hl.bind(mod .. " + l", hl.dsp.focus({ direction = "right" }))
-hl.bind(mod .. " + k", hl.dsp.focus({ direction = "up" }))
-hl.bind(mod .. " + j", hl.dsp.focus({ direction = "down" }))
-
-hl.bind(modalt .. " + h", hl.dsp.window.move({ direction = "left" }))
-hl.bind(modalt .. " + l", hl.dsp.window.move({ direction = "right" }))
-hl.bind(modalt .. " + k", hl.dsp.window.move({ direction = "up" }))
-hl.bind(modalt .. " + j", hl.dsp.window.move({ direction = "down" }))
-
-local res_step = 20
-hl.bind(modalt .. " + SHIFT + h", hl.dsp.window.resize({ x = -res_step, y = 0, relative = true }), { repeating = true })
-hl.bind(modalt .. " + SHIFT + l", hl.dsp.window.resize({ x = res_step, y = 0, relative = true }), { repeating = true })
-hl.bind(modalt .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -res_step, relative = true }), { repeating = true })
-hl.bind(modalt .. " + SHIFT + j", hl.dsp.window.resize({ x = 0, y = res_step, relative = true }), { repeating = true })
-
-local workspace_map = {
-	{ key = "a", ws = "1" },
-	{ key = "s", ws = "2" },
-	{ key = "d", ws = "3" },
-	{ key = "f", ws = "4" },
-	{ key = "q", ws = "5" },
-	{ key = "w", ws = "6" },
-	{ key = "e", ws = "7" },
-	{ key = "r", ws = "8" },
-	{ key = "z", ws = "9" },
-	{ key = "x", ws = "10" },
-	{ key = "c", ws = "11" },
-	{ key = "v", ws = "12" },
-}
-
-for _, entry in ipairs(workspace_map) do
-	hl.bind(alt .. " + " .. entry.key, hl.dsp.focus({ workspace = "name:" .. entry.ws }))
-	hl.bind(mod .. " + " .. alt .. " + " .. entry.key, hl.dsp.window.move({ workspace = "name:" .. entry.ws }))
+local bind = function(keys, action, opts)
+	local key_str
+	if type(keys) == "table" then
+		key_str = table.concat(keys, " + ")
+	else
+		key_str = keys
+	end
+	hl.bind(key_str, action, opts)
 end
 
-hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+bind("Print", exec(apps.screenshot))
+bind({ mod, "D" }, exec(apps.menu))
+bind({ mod, "SHIFT", "V" }, exec("cliphist list | tofi | cliphist decode | wl-copy"))
+bind({ mod, "Return" }, exec(apps.terminal))
+bind({ mod, "B" }, exec(apps.browser))
+bind({ mod, "E" }, exec(apps.filemanager))
+bind({ mod, "W" }, exec(apps.whatsapp))
+bind({ mod, "M" }, exec(apps.messages))
 
-hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+bind({ mod, "SHIFT", "Q" }, hl.dsp.window.close())
+bind({ mod, "SHIFT", "Escape" }, exec("~/.config/hypr/scripts/leave_computer.sh"))
+bind({ mod, "SHIFT", "L" }, exec("loginctl lock-session"))
 
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+bind({ mod, "F" }, hl.dsp.window.fullscreen({ action = "toggle" }))
+bind({ mod, "V" }, hl.dsp.window.float({ action = "toggle" }))
+bind({ mod, "P" }, hl.dsp.window.pin({ action = "toggle" }))
+bind({ mod, "X" }, hl.dsp.layout("togglesplit"))
 
-hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+bind({ mod, "G" }, hl.dsp.group.toggle())
+bind({ mod, "TAB" }, hl.dsp.group.next())
+
+bind(
+	{ mod, "SHIFT", "E" },
+	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit")
+)
+
+local directions = {
+	h = "left",
+	j = "down",
+	k = "up",
+	l = "right",
+}
+
+for key, dir in pairs(directions) do
+	bind({ mod, key }, hl.dsp.focus({ direction = dir }))
+	bind({ mod, alt, key }, hl.dsp.window.move({ direction = dir }))
+end
+
+local res_step = 20
+local resize_map = {
+	h = { -res_step, 0 },
+	j = { 0, res_step },
+	k = { 0, -res_step },
+	l = { res_step, 0 },
+}
+
+for key, coords in pairs(resize_map) do
+	bind(
+		{ mod, alt, "SHIFT", key },
+		hl.dsp.window.resize({ x = coords[1], y = coords[2], relative = true }),
+		{ repeating = true }
+	)
+end
+
+for _, ws in ipairs(workspaces.workspaces) do
+	bind({ alt, ws.key }, hl.dsp.focus({ workspace = "name:" .. ws.id }))
+	bind({ mod, alt, ws.key }, hl.dsp.window.move({ workspace = "name:" .. ws.id }))
+end
+
+bind({ mod, "mouse_down" }, hl.dsp.focus({ workspace = "e+1" }))
+bind({ mod, "mouse_up" }, hl.dsp.focus({ workspace = "e-1" }))
+
+bind({ mod, "mouse:272" }, hl.dsp.window.drag(), { mouse = true })
+bind({ mod, "mouse:273" }, hl.dsp.window.resize(), { mouse = true })
+
+local media_controls = {
+	{ "XF86AudioRaiseVolume", "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+", { locked = true, repeating = true } },
+	{ "XF86AudioLowerVolume", "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-", { locked = true, repeating = true } },
+	{ "XF86AudioMute", "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", { locked = true, repeating = true } },
+	{ "XF86AudioMicMute", "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle", { locked = true, repeating = true } },
+
+	{ "XF86MonBrightnessUp", "brightnessctl -e4 -n2 set 5%+", { locked = true, repeating = true } },
+	{ "XF86MonBrightnessDown", "brightnessctl -e4 -n2 set 5%-", { locked = true, repeating = true } },
+
+	{ "XF86AudioNext", "playerctl next", { locked = true } },
+	{ "XF86AudioPrev", "playerctl previous", { locked = true } },
+	{ "XF86AudioPause", "playerctl play-pause", { locked = true } },
+	{ "XF86AudioPlay", "playerctl play-pause", { locked = true } },
+}
+
+for _, control in ipairs(media_controls) do
+	local key, cmd, opts = control[1], control[2], control[3]
+	bind(key, exec(cmd), opts)
+end

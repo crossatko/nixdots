@@ -7,7 +7,9 @@ local monitor1 = {
 	scale = 1.0,
 	bitdepth = 10,
 	vrr = 3,
-	cm = "dcip3",
+	cm = "srgb",
+	sdrbrightness = 3,
+	sdrsaturation = 1.2,
 }
 
 local monitor2 = {
