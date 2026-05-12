@@ -39,7 +39,7 @@ bind({ mod, "TAB" }, hl.dsp.group.next())
 
 bind(
 	{ mod, "SHIFT", "E" },
-	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit")
+	hl.dsp.exec_cmd("if command -v hyprshutdown >/dev/null 2>&1; then hyprshutdown && hyprctl dispatch 'hl.dsp.exit()'; else hyprctl dispatch 'hl.dsp.exit()'; fi")
 )
 
 local directions = {

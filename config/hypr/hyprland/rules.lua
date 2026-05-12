@@ -115,9 +115,45 @@ hl.window_rule({
 	match = { fullscreen = true },
 })
 
-hl.window_rule({ name = "steam", workspace = "2", match = { class = "^steam" } })
-hl.window_rule({ name = "steam-game", workspace = "2", match = { class = "^steam_app_\\d+$" } })
-hl.window_rule({ name = "gamescope", workspace = "2", match = { class = "^gamescope" } })
+hl.window_rule({
+	name = "steam-input-osk",
+	float = true,
+	pin = true,
+	center = true,
+	no_dim = true,
+	opaque = true,
+	match = {
+		class = "^steam",
+		title = "^(Steam Input On-screen Keyboard)$",
+	},
+})
+
+hl.window_rule({
+	name = "steam",
+	workspace = "2",
+	match = {
+		class = "^steam$",
+		title = "^(Steam)$",
+	},
+})
+hl.window_rule({
+	name = "steam-game",
+	workspace = "2",
+	float = true,
+	fullscreen = true,
+	no_dim = true,
+	opaque = true,
+	match = { class = "^steam_app_\\d+$" },
+})
+hl.window_rule({
+	name = "gamescope",
+	workspace = "2",
+	float = true,
+	fullscreen = true,
+	no_dim = true,
+	opaque = true,
+	match = { class = "^gamescope" },
+})
 
 hl.window_rule({
 	name = "pavucontrol",

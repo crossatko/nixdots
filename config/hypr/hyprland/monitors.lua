@@ -3,7 +3,7 @@ local host = require("hyprland.host")
 local monitor1 = {
 	output = "DP-2",
 	mode = "2560x1440@360",
-	position = "0x0",
+	position = "0x1440",
 	scale = 1.0,
 	bitdepth = 10,
 	vrr = 3,
@@ -15,14 +15,14 @@ local monitor1 = {
 local monitor2 = {
 	output = "DP-3",
 	mode = "2560x1440@60",
-	position = "0x-1440",
+	position = "0x0",
 	scale = 1.0,
 }
 
 local tv = {
-	output = "HDMI-A-3",
-	mode = "preferred",
-	position = "auto",
+	output = "HDMI-A-2",
+	mode = "3840x2160@60",
+	position = "2560x1440",
 	scale = 1.0,
 	mirror = monitor1.output,
 }
@@ -62,4 +62,5 @@ end
 return {
 	primary = monitor1,
 	secondary = monitor2,
+	tv = tv or nil,
 }
