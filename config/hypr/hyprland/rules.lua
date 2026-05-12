@@ -3,6 +3,7 @@ local is_battlestation = host.is_battlestation
 local is_workstation = host.is_workstation
 local monitors = require("hyprland.monitors")
 
+local monitor1 = monitors.primary
 local monitor2 = monitors.secondary
 
 hl.window_rule({
@@ -136,6 +137,32 @@ hl.window_rule({
 		title = "^(Steam)$",
 	},
 })
+
+hl.window_rule({
+	name = "steam-activate-follow",
+	focus_on_activate = true,
+	match = {
+		class = "^steam$",
+	},
+})
+
+if is_battlestation and monitor1 and monitor1.output then
+	hl.window_rule({
+		name = "steam-big-picture-primary",
+		workspace = "2",
+		monitor = monitor1.output,
+		float = false,
+		fullscreen = true,
+		no_dim = true,
+		opaque = true,
+		focus_on_activate = true,
+		match = {
+			class = "^steam$",
+			title = "^(.*Big Picture.*)$",
+		},
+	})
+end
+
 hl.window_rule({
 	name = "steam-game",
 	workspace = "2",
@@ -143,6 +170,7 @@ hl.window_rule({
 	fullscreen = true,
 	no_dim = true,
 	opaque = true,
+	focus_on_activate = true,
 	match = { class = "^steam_app_\\d+$" },
 })
 hl.window_rule({
@@ -152,6 +180,7 @@ hl.window_rule({
 	fullscreen = true,
 	no_dim = true,
 	opaque = true,
+	focus_on_activate = true,
 	match = { class = "^gamescope" },
 })
 
@@ -226,3 +255,6 @@ hl.window_rule({
 		initial_title = "^(File Browser)$",
 	},
 })
+
+hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
+hl.layer_rule({ match = { namespace = "launcher" }, blur = true })

@@ -1,0 +1,15 @@
+[Unit]
+Description=Steam Big Picture display sleep daemon
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+Environment=STEAM_BP_TV_OUTPUT=HDMI-A-2
+Environment=STEAM_BP_DDC_BUS=8
+ExecStart=/home/kreejzak/.config/hypr/scripts/steam_bigpicture_ddc_daemon.sh ${STEAM_BP_TV_OUTPUT} ${STEAM_BP_DDC_BUS}
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=default.target
