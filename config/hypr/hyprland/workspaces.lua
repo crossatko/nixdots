@@ -18,7 +18,7 @@ local workspaces = {
 	{ id = "9", key = "z", monitor = monitor1.output },
 	{ id = "10", key = "x", monitor = monitor1.output },
 	{ id = "11", key = "c", monitor = monitor1.output },
-	{ id = "12", key = "v", monitor = monitor1.output, app = apps.jellyfin },
+	{ id = "12", key = "v", monitor = monitor1.output },
 }
 
 for _, ws in ipairs(workspaces) do

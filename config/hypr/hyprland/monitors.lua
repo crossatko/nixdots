@@ -16,6 +16,7 @@ local monitor2 = {
 	output = "DP-3",
 	mode = "2560x1440@60",
 	position = "0x0",
+	cm = "srgb",
 	scale = 1.0,
 }
 

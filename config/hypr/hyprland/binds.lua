@@ -39,7 +39,7 @@ bind({ mod, "TAB" }, hl.dsp.group.next())
 
 bind(
 	{ mod, "SHIFT", "E" },
-	hl.dsp.exec_cmd("if command -v hyprshutdown >/dev/null 2>&1; then hyprshutdown && hyprctl dispatch 'hl.dsp.exit()'; else hyprctl dispatch 'hl.dsp.exit()'; fi")
+	hl.dsp.exec_cmd("if command -v hyprshutdown >/dev/null 2>&1; then hyprshutdown --no-fork --no-exit; fi; hyprctl dispatch exit")
 )
 
 local directions = {
@@ -71,8 +71,9 @@ for key, coords in pairs(resize_map) do
 end
 
 for _, ws in ipairs(workspaces.workspaces) do
-	bind({ alt, ws.key }, hl.dsp.focus({ workspace = "name:" .. ws.id }))
-	bind({ mod, alt, ws.key }, hl.dsp.window.move({ workspace = "name:" .. ws.id }))
+	local ws_num = tonumber(ws.id) or ws.id
+	bind({ alt, ws.key }, hl.dsp.focus({ workspace = ws_num }))
+	bind({ mod, alt, ws.key }, hl.dsp.window.move({ workspace = ws_num }))
 end
 
 bind({ mod, "mouse_down" }, hl.dsp.focus({ workspace = "e+1" }))

@@ -258,3 +258,9 @@ hl.window_rule({
 
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true })
 hl.layer_rule({ match = { namespace = "launcher" }, blur = true })
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, blur = true })
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, ignore_alpha = 0.2 })
+hl.layer_rule({ match = { namespace = "swaync-control-center" }, animation = "slide right" })
+hl.layer_rule({ match = { namespace = "swaync-notification-center" }, blur = true })
+hl.layer_rule({ match = { namespace = "swaync-notification-center" }, ignore_alpha = 0.2 })
+hl.layer_rule({ match = { namespace = "swaync-notification-center" }, animation = "slide right" })
