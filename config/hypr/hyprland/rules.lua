@@ -33,7 +33,7 @@ if is_battlestation then
 		opaque = true,
 		no_dim = true,
 		monitor = monitor2.output,
-		move = "(monitor_w-1568) (monitor_h-914)",
+		move = "(monitor_w-1580) (monitor_h-926)",
 		size = "1568 882",
 		match = { initial_title = "Picture in picture" },
 	})

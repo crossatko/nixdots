@@ -37,10 +37,7 @@ bind({ mod, "X" }, hl.dsp.layout("togglesplit"))
 bind({ mod, "G" }, hl.dsp.group.toggle())
 bind({ mod, "TAB" }, hl.dsp.group.next())
 
-bind(
-	{ mod, "SHIFT", "E" },
-	hl.dsp.exec_cmd("if command -v hyprshutdown >/dev/null 2>&1; then hyprshutdown --no-fork --no-exit; fi; hyprctl dispatch exit")
-)
+bind({ mod, "SHIFT", "E" }, hl.dsp.exec_cmd("hyprshutdown"))
 
 local directions = {
 	h = "left",

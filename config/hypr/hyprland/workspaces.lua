@@ -30,6 +30,16 @@ for _, ws in ipairs(workspaces) do
 	})
 end
 
+hl.workspace_rule({
+	workspace = "m[" .. monitor2.output .. "]w[p1-9]",
+	gaps_out = {
+		top = 12,
+		bottom = 12,
+		left = 12,
+		right = 1588,
+	},
+})
+
 return {
 	workspaces = workspaces,
 }

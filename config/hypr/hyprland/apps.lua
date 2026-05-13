@@ -7,7 +7,7 @@ return {
 	discord = "discord",
 	signal = "flatpak run org.signal.Signal",
 	mail = "thunderbird",
-	filemanager = "nautilus",
+	filemanager = "nautilus --new-window",
 	screenshot = "hyprshot -m region --clipboard-only",
 	jellyfin = "flatpak run org.jellyfin.JellyfinDesktop",
 }

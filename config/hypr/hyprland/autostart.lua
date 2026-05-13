@@ -12,7 +12,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("1password --silent")
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("swaync")
-	hl.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 24")
+	hl.exec_cmd("hyprctl setcursor Oxygen-White 24")
 	hl.exec_cmd("nm-applet --indicator &")
 	hl.exec_cmd("blueman-applet &")
 
