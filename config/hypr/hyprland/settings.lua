@@ -1,3 +1,5 @@
+local theme = require("hyprland.theme")
+
 hl.config({ render = { direct_scanout = 0 } })
 hl.config({ ecosystem = { no_donation_nag = true } })
 hl.config({ cursor = { no_warps = true, no_hardware_cursors = true } })
@@ -7,21 +9,13 @@ hl.config({
 	general = {
 		gaps_in = 6,
 		gaps_out = 12,
-		border_size = 4,
+		border_size = theme.glass.border_size,
 		col = {
 			active_border = {
-				colors = {
-					"0xaa050505",
-					"0x66222222",
-					"0x44888888",
-					"0x88bbbbbb",
-					"0x44888888",
-					"0x66222222",
-					"0xaa050505",
-				},
+				colors = theme.active.border_gradient,
 				angle = 45,
 			},
-			inactive_border = "0x22000000",
+			inactive_border = theme.active.inactive_border,
 		},
 		resize_on_border = false,
 		allow_tearing = false,
@@ -33,20 +27,12 @@ hl.config({
 	group = {
 		col = {
 			border_active = {
-				colors = {
-					"0xaa050505",
-					"0x66222222",
-					"0x44888888",
-					"0x88bbbbbb",
-					"0x44888888",
-					"0x66222222",
-					"0xaa050505",
-				},
+				colors = theme.active.border_gradient,
 				angle = 45,
 			},
-			border_inactive = "0x22000000",
-			border_locked_active = "0xaa050505",
-			border_locked_inactive = "0x22000000",
+			border_inactive = theme.active.inactive_border,
+			border_locked_active = theme.active.locked_active,
+			border_locked_inactive = theme.active.locked_inactive,
 		},
 		groupbar = {
 			enabled = true,
@@ -58,17 +44,17 @@ hl.config({
 			gaps_in = 2,
 			gaps_out = 3,
 			keep_upper_gap = true,
-			rounding = 8,
-			rounding_power = 2,
-			gradient_rounding = 8,
-			gradient_rounding_power = 2,
+			rounding = theme.glass.group_rounding,
+			rounding_power = theme.glass.group_rounding_power,
+			gradient_rounding = theme.glass.gradient_rounding,
+			gradient_rounding_power = theme.glass.gradient_rounding_power,
 			round_only_edges = true,
 			gradient_round_only_edges = true,
 			col = {
-				active = "0xaa050505",
-				inactive = "0x22000000",
-				locked_active = "0xaa050505",
-				locked_inactive = "0x22111111",
+				active = theme.active.locked_active,
+				inactive = theme.active.inactive_border,
+				locked_active = theme.active.locked_active,
+				locked_inactive = theme.active.locked_inactive,
 			},
 		},
 	},
@@ -76,8 +62,8 @@ hl.config({
 
 hl.config({
 	decoration = {
-		rounding = 10,
-		rounding_power = 10,
+		rounding = theme.glass.window_rounding,
+		rounding_power = theme.glass.window_rounding_power,
 		active_opacity = 1.0,
 		inactive_opacity = 0.75,
 		dim_inactive = true,
@@ -86,7 +72,7 @@ hl.config({
 			enabled = true,
 			range = 24,
 			render_power = 3,
-			color = "0x66000000",
+			color = theme.active.shadow,
 			offset = "3 3",
 		},
 		blur = {

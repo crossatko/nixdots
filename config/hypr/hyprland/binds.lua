@@ -38,6 +38,8 @@ bind({ mod, "G" }, hl.dsp.group.toggle())
 bind({ mod, "TAB" }, hl.dsp.group.next())
 
 bind({ mod, "SHIFT", "E" }, hl.dsp.exec_cmd("hyprshutdown"))
+bind({ mod, "SHIFT", "S" }, hl.dsp.exec_cmd("hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown now'"))
+bind({ mod, "SHIFT", "R" }, hl.dsp.exec_cmd("hyprshutdown -t 'Restarting...' --post-cmd 'reboot'"))
 
 local directions = {
 	h = "left",
@@ -72,9 +74,6 @@ for _, ws in ipairs(workspaces.workspaces) do
 	bind({ alt, ws.key }, hl.dsp.focus({ workspace = ws_num }))
 	bind({ mod, alt, ws.key }, hl.dsp.window.move({ workspace = ws_num }))
 end
-
-bind({ mod, "mouse_down" }, hl.dsp.focus({ workspace = "e+1" }))
-bind({ mod, "mouse_up" }, hl.dsp.focus({ workspace = "e-1" }))
 
 bind({ mod, "mouse:272" }, hl.dsp.window.drag(), { mouse = true })
 bind({ mod, "mouse:273" }, hl.dsp.window.resize(), { mouse = true })
