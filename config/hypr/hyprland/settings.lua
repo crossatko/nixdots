@@ -1,7 +1,12 @@
 local theme = require("hyprland.theme")
 
 hl.config({ render = { direct_scanout = 0 } })
-hl.config({ ecosystem = { no_donation_nag = true } })
+hl.config({
+	ecosystem = {
+		no_donation_nag = true,
+		enforce_permissions = false,
+	},
+})
 hl.config({ cursor = { no_warps = true, no_hardware_cursors = true } })
 hl.config({ xwayland = { force_zero_scaling = true } })
 

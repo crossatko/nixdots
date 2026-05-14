@@ -150,7 +150,7 @@ hl.window_rule({
 if is_battlestation and monitor1 and monitor1.output then
 	hl.window_rule({
 		name = "steam-big-picture-primary",
-		workspace = "2",
+		workspace = "10",
 		monitor = monitor1.output,
 		float = false,
 		fullscreen = true,
@@ -183,6 +183,16 @@ hl.window_rule({
 	opaque = true,
 	focus_on_activate = true,
 	match = { class = "^gamescope" },
+})
+
+hl.window_rule({
+	name = "hyprland-share-picker",
+	float = true,
+	pin = true,
+	size = "1000 900",
+	center = true,
+	match = { class = "hyprland-share-picker" },
+	focus_on_activate = true,
 })
 
 hl.window_rule({

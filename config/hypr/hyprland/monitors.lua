@@ -23,9 +23,8 @@ local monitor2 = {
 local tv = {
 	output = "HDMI-A-2",
 	mode = "3840x2160@60",
-	position = "2560x1440",
+	position = "2560x0",
 	scale = 1.0,
-	mirror = monitor1.output,
 }
 
 if host.is_archlinux or host.is_nix_vm then
@@ -56,12 +55,10 @@ if monitor2.output ~= monitor1.output then
 	hl.monitor(monitor2)
 end
 
-if host.is_battlestation and tv.output ~= nil then
-	hl.monitor(tv)
-end
+hl.monitor(tv)
 
 return {
 	primary = monitor1,
 	secondary = monitor2,
-	tv = tv or nil,
+	tv = tv,
 }
