@@ -1,6 +1,6 @@
 return {
 	menu = "tofi-drun --drun-launch=true",
-	terminal = "ghostty || alacritty || kitty",
+	terminal = "kitty || ghostty || alacritty",
 	browser = "brave",
 	whatsapp = "brave --app='https://web.whatsapp.com'",
 	messages = "brave --app='https://messages.google.com'",
