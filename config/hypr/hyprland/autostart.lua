@@ -15,9 +15,10 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprctl setcursor Oxygen-White 24")
 	hl.exec_cmd("nm-applet --indicator &")
 	hl.exec_cmd("blueman-applet &")
+	hl.exec_cmd("~/.config/hypr/scripts/pip-fix.sh")
 
 	if host.is_battlestation then
-		hl.exec_cmd("steam -silent")
+		hl.exec_cmd("env LD_PRELOAD=/usr/lib32/libextest.so /usr/bin/steam %U -silent")
 	end
 
 	if host.is_battlestation and monitors.tv and monitors.tv.output then
