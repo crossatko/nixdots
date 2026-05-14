@@ -1,5 +1,6 @@
 local apps = require("hyprland.apps")
 local workspaces = require("hyprland.workspaces")
+local leave_computer = require("scripts.leave-computer").leave_computer
 
 local mod = "SUPER"
 local alt = "ALT"
@@ -26,8 +27,9 @@ bind({ mod, "W" }, exec(apps.whatsapp))
 bind({ mod, "M" }, exec(apps.messages))
 
 bind({ mod, "SHIFT", "Q" }, hl.dsp.window.close())
-bind({ mod, "SHIFT", "Escape" }, exec("~/.config/hypr/scripts/leave_computer.sh"))
-bind({ mod, "SHIFT", "L" }, exec("loginctl lock-session"))
+bind({ mod, "SHIFT", "Escape" }, leave_computer)
+
+bind({ mod, "SHIFT", "L" }, exec("hyprlock"))
 
 bind({ mod, "F" }, hl.dsp.window.fullscreen({ action = "toggle" }))
 bind({ mod, "V" }, hl.dsp.window.float({ action = "toggle" }))
