@@ -158,26 +158,26 @@ if is_battlestation and monitor1 and monitor1.output then
 		opaque = true,
 		focus_on_activate = true,
 		match = {
-			class = "^steam$",
-			title = "^(.*Big Picture.*)$",
+			initial_title = "Steam Big Picture Mode",
 		},
 	})
 end
 
 hl.window_rule({
 	name = "steam-game",
-	workspace = "2",
-	float = true,
+	workspace = "9",
+	float = false,
 	fullscreen = true,
 	no_dim = true,
 	opaque = true,
 	focus_on_activate = true,
 	match = { class = "^steam_app_\\d+$" },
 })
+
 hl.window_rule({
 	name = "gamescope",
-	workspace = "2",
-	float = true,
+	workspace = "9",
+	float = false,
 	fullscreen = true,
 	no_dim = true,
 	opaque = true,
@@ -237,7 +237,7 @@ hl.window_rule({
 	name = "tuifin-mpv",
 	workspace = "11",
 	float = false,
-	fullscreen = false,
+	fullscreen = true,
 	match = { class = "^(tuifin-mpv)$" },
 	no_dim = true,
 	opaque = true,
