@@ -16,6 +16,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("blueman-applet &")
 
 	if host.is_battlestation then
-		hl.exec_cmd("env LD_PRELOAD=/usr/lib32/libextest.so /usr/bin/steam %U -silent")
+		hl.exec_cmd("steam -silent")
 	end
 end)
