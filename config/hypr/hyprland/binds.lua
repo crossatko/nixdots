@@ -1,6 +1,8 @@
 local apps = require("hyprland.apps")
 local workspaces = require("hyprland.workspaces")
 local leave_computer = require("scripts.leave-computer").leave_computer
+local show_power_menu = require("scripts.power-menu").show_power_menu
+local show_sound_output_menu = require("scripts.sound-output-menu").show_sound_output_menu
 
 local mod = "SUPER"
 local alt = "ALT"
@@ -39,9 +41,8 @@ bind({ mod, "X" }, hl.dsp.layout("togglesplit"))
 bind({ mod, "G" }, hl.dsp.group.toggle())
 bind({ mod, "TAB" }, hl.dsp.group.next())
 
-bind({ mod, "SHIFT", "E" }, hl.dsp.exec_cmd("hyprshutdown"))
-bind({ mod, "SHIFT", "S" }, hl.dsp.exec_cmd("hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown now'"))
-bind({ mod, "SHIFT", "R" }, hl.dsp.exec_cmd("hyprshutdown -t 'Restarting...' --post-cmd 'reboot'"))
+bind({ mod, "SHIFT", "E" }, show_power_menu)
+bind({ mod, "SHIFT", "S" }, show_sound_output_menu)
 
 local directions = {
 	h = "left",
