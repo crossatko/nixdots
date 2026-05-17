@@ -121,7 +121,8 @@ hl.window_rule({
 	name = "steam-input-osk",
 	float = true,
 	pin = true,
-	center = true,
+	size = "1280 360",
+	move = "((monitor_w-1280)/2) (monitor_h-360)",
 	no_dim = true,
 	opaque = true,
 	match = {
@@ -147,11 +148,10 @@ hl.window_rule({
 	},
 })
 
-if is_battlestation and monitor1 and monitor1.output then
+if is_battlestation then
 	hl.window_rule({
-		name = "steam-big-picture-primary",
+		name = "steam-big-picture-media-workspace",
 		workspace = "10",
-		monitor = monitor1.output,
 		float = false,
 		fullscreen = true,
 		no_dim = true,
@@ -249,6 +249,16 @@ hl.window_rule({
 	float = false,
 	fullscreen = true,
 	match = { class = "^(tuifin-mpv)$" },
+	no_dim = true,
+	opaque = true,
+})
+
+hl.window_rule({
+	name = "jellydeck",
+	workspace = "11",
+	float = false,
+	fullscreen = true,
+	match = { title = "JellyDeck" },
 	no_dim = true,
 	opaque = true,
 })
