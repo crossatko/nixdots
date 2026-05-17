@@ -5,6 +5,15 @@ local monitors = require("hyprland.monitors")
 
 local monitor1 = monitors.primary
 local monitor2 = monitors.secondary
+local tv = monitors.tv
+
+local function tvOrPrimary()
+	if hl.get_monitor(tv.output) ~= nil then
+		return tv.output
+	else
+		return monitor1.output
+	end
+end
 
 hl.window_rule({
 	name = "suppress-maximize-events",
@@ -168,6 +177,7 @@ hl.window_rule({
 	workspace = "9",
 	float = false,
 	fullscreen = true,
+	monitor = tvOrPrimary(),
 	no_dim = true,
 	opaque = true,
 	focus_on_activate = true,

@@ -51,10 +51,7 @@ elseif host.is_workstation then
 end
 
 hl.monitor(monitor1)
-if monitor2.output ~= monitor1.output then
-	hl.monitor(monitor2)
-end
-
+hl.monitor(monitor2)
 hl.monitor(tv)
 
 return {
