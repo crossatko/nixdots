@@ -12,7 +12,7 @@ hl.config({ xwayland = { force_zero_scaling = true } })
 
 hl.config({
 	general = {
-		gaps_in = 6,
+		gaps_in = 4,
 		gaps_out = 12,
 		border_size = theme.glass.border_size,
 		col = {

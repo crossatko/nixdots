@@ -142,7 +142,7 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "steam",
-	workspace = "2",
+	workspace = "1",
 	match = {
 		class = "^steam$",
 		title = "^(Steam)$",
