@@ -4,6 +4,8 @@ local monitors = require("hyprland.monitors")
 local TV_OUTPUT = monitors.tv.output
 local RESTORE_BRIGHTNESS = 80
 local DIM_BRIGHTNESS = 1
+local DIM_WALLPPAPER = "~/.config/hypr/black.png"
+local DEFAULT_WALLPAPER = "~/.config/hypr/nier.jpg"
 
 local ddc_buses = {}
 if host.is_battlestation then
@@ -57,6 +59,12 @@ local function is_big_picture_active()
 	return false
 end
 
+local function set_wallpaper(wallpaper)
+	for _, mon in pairs(monitors) do
+		hl.exec_cmd('hyprctl hyprpaper wallpaper "' .. mon.output .. "," .. wallpaper .. '"')
+	end
+end
+
 local function sync_dim_state()
 	if #ddc_buses == 0 then
 		return
@@ -66,6 +74,8 @@ local function sync_dim_state()
 
 	if should_dim and not dimmed then
 		set_external_brightness(DIM_BRIGHTNESS)
+		set_wallpaper(DIM_WALLPPAPER)
+
 		dimmed = true
 		hl.notification.create({
 			text = "Steam Big Picture on TV: dimmed other displays",
@@ -77,6 +87,8 @@ local function sync_dim_state()
 	if not should_dim and dimmed then
 		set_external_brightness(RESTORE_BRIGHTNESS)
 		restart_hypridle()
+		set_wallpaper(DEFAULT_WALLPAPER)
+
 		dimmed = false
 		hl.notification.create({
 			text = "Restored display brightness + restarted hypridle",
