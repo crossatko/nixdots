@@ -55,12 +55,12 @@ end
 
 local function set_external_brightness(level)
 	for _, bus in ipairs(ddc_buses) do
-		os.execute("ddcutil --bus " .. bus .. " setvcp 0x10 " .. level .. " >/dev/null 2>&1")
+		hl.exec_cmd("ddcutil --bus " .. bus .. " setvcp 0x10 " .. level .. " >/dev/null 2>&1")
 	end
 end
 
 local function restart_hypridle()
-	os.execute("systemctl --user restart hypridle >/dev/null 2>&1")
+	hl.exec_cmd("systemctl --user restart hypridle >/dev/null 2>&1")
 end
 
 local function is_tv_connected()
@@ -101,9 +101,9 @@ local function set_gate_reason(reason)
 	end
 	last_gate_reason = reason
 
-	if reason then
-		hl.notification.create({ text = "steam-tv-dim idle: " .. reason, timeout = 3000 })
-	end
+	-- if reason then
+	-- 	hl.notification.create({ text = "steam-tv-dim idle: " .. reason, timeout = 3000 })
+	-- end
 end
 
 local function apply_dim()
@@ -128,7 +128,7 @@ local function sync_dim_state()
 	end
 
 	local tv = is_tv_connected()
-	local big_picture = is_big_picture_active()
+	local big_picture = tv and is_big_picture_active() or false
 	local should_dim = tv and big_picture
 
 	if should_dim then
