@@ -23,7 +23,7 @@ local monitor2 = {
 local tv = {
 	output = "HDMI-A-2",
 	mode = "3840x2160@60",
-	position = "2560x0",
+	position = "2560x720",
 	scale = 1.0,
 }
 
