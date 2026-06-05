@@ -53,7 +53,7 @@ local directions = {
 
 for key, dir in pairs(directions) do
 	bind({ mod, key }, hl.dsp.focus({ direction = dir }))
-	bind({ mod, alt, key }, hl.dsp.window.move({ direction = dir }))
+	bind({ mod, alt, key }, hl.dsp.window.move({ direction = dir, group_aware = true }))
 end
 
 local res_step = 20
