@@ -271,3 +271,8 @@ fi
 #
 # eval "$(zoxide init zsh)"
 
+
+# OpenRouter API key (used by minuet-ai.nvim for AI autocomplete in Neovim)
+# The actual key lives in ~/.config/secrets/env (gitignored, not in the public dotfiles repo).
+# Get one at: https://openrouter.ai/keys
+[[ -f "$HOME/.config/secrets/env" ]] && source "$HOME/.config/secrets/env"

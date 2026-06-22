@@ -14,3 +14,10 @@ config/opencode/node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# Secrets — never commit personal env vars / API keys.
+# Real values live in ~/.config/secrets/env (sourced from .zshrc).
+**/secrets/
+**/secrets/*
+*.local
+.zshrc.local
