@@ -1,7 +1,12 @@
 local theme = require("hyprland.theme")
 
-hl.config({ render = { direct_scanout = 0 } })
 hl.config({
+	render = {
+		direct_scanout = 0,
+		cm_auto_hdr = 1,
+		cm_sdr_eotf = "srgb",
+		use_fp16 = true,
+	},
 	ecosystem = {
 		no_donation_nag = true,
 		enforce_permissions = false,

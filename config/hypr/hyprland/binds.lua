@@ -21,7 +21,7 @@ end
 
 bind("Print", exec(apps.screenshot))
 bind({ mod, "D" }, exec(apps.menu))
-bind({ mod, "SHIFT", "V" }, exec("cliphist list | tofi | cliphist decode | wl-copy"))
+-- bind({ mod, "SHIFT", "V" }, exec("cliphist list | tofi | cliphist decode | wl-copy"))
 bind({ mod, "Return" }, exec(apps.terminal))
 bind({ mod, "B" }, exec(apps.browser))
 bind({ mod, "E" }, exec(apps.filemanager))
@@ -82,8 +82,8 @@ bind({ mod, "mouse:272" }, hl.dsp.window.drag(), { mouse = true })
 bind({ mod, "mouse:273" }, hl.dsp.window.resize(), { mouse = true })
 
 local media_controls = {
-	{ "XF86AudioRaiseVolume", "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+", { locked = true, repeating = true } },
-	{ "XF86AudioLowerVolume", "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-", { locked = true, repeating = true } },
+	{ "XF86AudioRaiseVolume", "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 1%+", { locked = true } },
+	{ "XF86AudioLowerVolume", "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-", { locked = true } },
 	{ "XF86AudioMute", "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", { locked = true, repeating = true } },
 	{ "XF86AudioMicMute", "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle", { locked = true, repeating = true } },
 

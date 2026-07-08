@@ -21,3 +21,7 @@ Thumbs.db
 **/secrets/*
 *.local
 .zshrc.local
+hypr/.secrets
+config/hypr/.secrets
+config/hypr/scripts/diacritics.log
+hypr/.secrets

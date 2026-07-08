@@ -1,84 +1,212 @@
 #!/usr/bin/env python3
-import subprocess
-import json
-import urllib.request
-import sys
-import re
+"""Czech diacritics corrector via OpenRouter API.
 
-API_URL = "http://localhost:1234/v1/chat/completions"
+Highlight text → Super+Ctrl+V → corrects diacritics and pastes in place.
+Requires: wl-clipboard, wtype
+"""
+
+import os
+import re
+import json
+import sys
+import subprocess
+import time
+import urllib.request
+from datetime import datetime
+
+LOG_PATH = os.path.expanduser("~/.config/hypr/scripts/diacritics.log")
+API_URL = "https://openrouter.ai/api/v1/chat/completions"
+MODEL = "google/gemini-2.5-flash"
 
 SYSTEM_PROMPT = (
-    "You are a sophisticated text processing engine for the Czech language. "
-    "Your ONLY task is to correct the input text by adding missing diacritics "
-    "(háčky a čárky), fixing spelling errors, and correcting basic grammar. "
-    "Do not change the meaning or tone. "
-    "IMPORTANT: Output ONLY the corrected text. Do not say 'Here is the text' or 'Sure'. "
-    "If the input is already correct, output it exactly as is."
+    "You are a text processing engine for Czech. "
+    "Your ONLY task is to add missing Czech diacritics (á, é, í, ó, ú, ů, ě, š, č, ř, ž, ý, ď, ť, ň) "
+    "and fix obvious spelling errors. "
+    "Do NOT change meaning, tone, formatting, or punctuation. "
+    "If the text already has correct diacritics, return it unchanged. "
+    "IMPORTANT: Output ONLY the corrected text. No explanations, no prefixes, no markdown fences."
 )
 
-MODEL_NAME = "local-model" 
 
-def notify(title, message, urgency="normal"):
+def log(msg, level="INFO"):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{timestamp}] [{level}] {msg}"
+    print(line, file=sys.stderr)
     try:
-        subprocess.run(['notify-send', '-u', urgency, title, message])
-    except FileNotFoundError:
+        with open(LOG_PATH, "a") as f:
+            f.write(line + "\n")
+    except Exception:
         pass
 
-def get_clipboard():
+
+def notify(title, message, urgency="normal"):
+    log(f"notify: {title}: {message}")
     try:
-        return subprocess.check_output(['wl-paste'], text=True).strip()
+        subprocess.run(["notify-send", "-u", urgency, title, message], timeout=5)
     except Exception:
-        notify("Error", "Clipboard empty.", "critical")
+        pass
+
+
+def load_api_key():
+    candidates = [
+        os.path.expanduser("~/.config/hypr/.secrets"),
+        os.path.expanduser("~/.secrets"),
+    ]
+    for path in candidates:
+        try:
+            with open(path) as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith("OPENROUTER_API_KEY="):
+                        key = line.split("=", 1)[1].strip().strip('"').strip("'")
+                        if key:
+                            log(f"Loaded API key from {path}")
+                            return key
+        except FileNotFoundError:
+            continue
+        except Exception as e:
+            log(f"Error reading {path}: {e}", "WARN")
+
+    env_key = os.environ.get("OPENROUTER_API_KEY")
+    if env_key:
+        log("Using OPENROUTER_API_KEY from environment")
+    return env_key
+
+
+def get_selected_text():
+    """Read PRIMARY selection (highlighted text)."""
+    try:
+        result = subprocess.run(
+            ["wl-paste", "--primary", "--no-newline"],
+            capture_output=True, text=True, timeout=5
+        )
+        log(f"PRIMARY selection read: {len(result.stdout)} chars, exit code {result.returncode}")
+        return result.stdout if result.returncode == 0 else ""
+    except FileNotFoundError:
+        log("wl-paste not found!", "ERROR")
+        notify("Czech Diacritics", "wl-paste not found", "critical")
         sys.exit(1)
+    except Exception as e:
+        log(f"PRIMARY read failed: {e}", "ERROR")
+        return ""
+
 
 def set_clipboard(text):
+    """Write corrected text to clipboard."""
     try:
-        process = subprocess.Popen(['wl-copy'], stdin=subprocess.PIPE, text=True)
-        process.communicate(input=text)
+        result = subprocess.run(
+            ["wl-copy"],
+            input=text, text=True, timeout=5
+        )
+        log(f"Clipboard write: {len(text)} chars, exit code {result.returncode}")
+        return result.returncode == 0
     except Exception as e:
-        notify("Error", f"Clipboard write failed: {e}", "critical")
+        log(f"Clipboard write failed: {e}", "ERROR")
+        return False
+
+
+def paste():
+    """Simulate Ctrl+V to paste corrected text into focused window."""
+    try:
+        time.sleep(0.05)
+        result = subprocess.run(["wtype", "-M", "ctrl", "v"], timeout=5)
+        log(f"Paste via wtype: exit code {result.returncode}")
+        return result.returncode == 0
+    except FileNotFoundError:
+        log("wtype not found — cannot auto-paste. Install: sudo pacman -S wtype", "ERROR")
+        return False
+    except Exception as e:
+        log(f"wtype failed: {e}", "ERROR")
+        return False
+
 
 def clean_response(text):
-    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
-    text = re.sub(r'^```(czech|text)?\n', '', text)
-    text = re.sub(r'\n```$', '', text)
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+    text = re.sub(r"^```(?:czech|text)?\n", "", text)
+    text = re.sub(r"\n```$", "", text)
     return text.strip()
 
-def query_lm_studio(prompt):
-    payload = {
-        "model": MODEL_NAME,
+
+def query_api(text):
+    api_key = load_api_key()
+    if not api_key:
+        log("No API key found!", "ERROR")
+        notify("Czech Diacritics", "No API key — set OPENROUTER_API_KEY in ~/.config/hypr/.secrets", "critical")
+        return None
+
+    payload = json.dumps({
+        "model": MODEL,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": text},
         ],
-        "temperature": 0.3,
-        "max_tokens": -1,
-        "stream": False
+        "temperature": 0.1,
+        "max_tokens": 4096,
+    }).encode("utf-8")
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}",
     }
 
-    headers = {'Content-Type': 'application/json'}
-    data = json.dumps(payload).encode('utf-8')
+    log(f"Sending {len(text)} chars to OpenRouter ({MODEL})")
 
     try:
-        req = urllib.request.Request(API_URL, data=data, headers=headers)
-        with urllib.request.urlopen(req) as response:
-            result = json.load(response)
-            return clean_response(result['choices'][0]['message']['content'])
+        req = urllib.request.Request(API_URL, data=payload, headers=headers)
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            raw = resp.read().decode("utf-8")
+            log(f"API response: HTTP {resp.status}, {len(raw)} bytes")
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        log(f"API HTTP error {e.code}: {body[:500]}", "ERROR")
+        notify("Czech Diacritics", f"API error {e.code}", "critical")
+        return None
     except Exception as e:
-        notify("API Error", str(e), "critical")
-        sys.exit(1)
+        log(f"API request failed: {e}", "ERROR")
+        notify("Czech Diacritics", f"API failed: {e}", "critical")
+        return None
+
+    try:
+        result = json.loads(raw)
+        content = result["choices"][0]["message"]["content"]
+        corrected = clean_response(content)
+        log(f"Corrected: {len(corrected)} chars")
+        return corrected
+    except (json.JSONDecodeError, KeyError, IndexError) as e:
+        log(f"Failed to parse response: {e}", "ERROR")
+        log(f"Raw (first 500): {raw[:500]}", "ERROR")
+        notify("Czech Diacritics", "Failed to parse response", "critical")
+        return None
+
 
 def main():
-    user_input = get_clipboard()
-    if not user_input: return
+    log("--- Started ---")
 
-    notify("Czech Corrector", "Adding diacritics...", "low")
-    
-    corrected_text = query_lm_studio(user_input)
-    
-    set_clipboard(corrected_text)
-    notify("Czech Corrector", "Text fixed and copied!")
+    text = get_selected_text()
+    if not text or text.strip() == "":
+        log("No text selected")
+        notify("Czech Diacritics", "No text selected")
+        return
+
+    corrected = query_api(text)
+    if not corrected:
+        return
+
+    if corrected == text:
+        log("Text unchanged (diacritics already correct)")
+        notify("Czech Diacritics", "Already correct ✓")
+        return
+
+    if set_clipboard(corrected):
+        if paste():
+            # notify("Czech Diacritics", "✓ Corrected & pasted")
+        else:
+            notify("Czech Diacritics", "Corrected — paste manually with Ctrl+V")
+    else:
+        notify("Czech Diacritics", "Clipboard write failed", "critical")
+
+    log("--- Done ---")
+
 
 if __name__ == "__main__":
     main()
-
