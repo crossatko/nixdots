@@ -1,9 +1,13 @@
 local apps = require("hyprland.apps")
 local monitors = require("hyprland.monitors")
+local host = require("hyprland.host")
 
 local monitor1 = monitors.primary
 local monitor2 = monitors.secondary
 local tv = monitors.tv
+
+local is_battlestation = host.is_battlestation
+local is_workstation = host.is_workstation
 
 local mediaWorkspaceOutput = monitor1.output
 if tv ~= nil and tv.output ~= nil and hl.get_monitor(tv.output) ~= nil then
@@ -37,7 +41,7 @@ for _, ws in ipairs(workspaces) do
 	})
 end
 
-if monitor2.output ~= monitor1.output then
+if is_battlestation then
 	hl.workspace_rule({
 		workspace = "m[" .. monitor2.output .. "]w[p1-9]",
 		gaps_out = {
@@ -45,6 +49,36 @@ if monitor2.output ~= monitor1.output then
 			bottom = 12,
 			left = 12,
 			right = 1588,
+		},
+	})
+end
+if is_workstation then
+	hl.workspace_rule({
+		workspace = "m[" .. monitor1.output .. "]w[p1-9]",
+		gaps_out = {
+			top = 12,
+			bottom = 12,
+			left = 12,
+			right = 892,
+		},
+	})
+	hl.workspace_rule({
+		workspace = "m[" .. monitor1.output .. "]w[t1]",
+		gaps_out = {
+			top = 12,
+			bottom = 12,
+			left = 12,
+			right = 892,
+		},
+	})
+
+	hl.workspace_rule({
+		workspace = "m[" .. monitor2.output .. "]w[p1-9]",
+		gaps_out = {
+			top = 12,
+			bottom = 687,
+			left = 12,
+			right = 12,
 		},
 	})
 end

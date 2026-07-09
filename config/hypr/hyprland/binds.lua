@@ -19,6 +19,15 @@ local bind = function(keys, action, opts)
 	hl.bind(key_str, action, opts)
 end
 
+local myPin = function()
+	hl.dispatch(hl.dsp.window.pin({ action = "on" }))
+	hl.dispatch(hl.dsp.window.float({ action = "on" }))
+	hl.dispatch(hl.dsp.window.resize({ x = 866, y = 1416 }))
+	hl.dispatch(hl.dsp.window.move({ x = 2560, y = 12 }))
+end
+
+bind({ mod, "SHIFT", "P" }, myPin)
+
 bind("Print", exec(apps.screenshot))
 bind({ mod, "D" }, exec(apps.menu))
 -- bind({ mod, "SHIFT", "V" }, exec("cliphist list | tofi | cliphist decode | wl-copy"))

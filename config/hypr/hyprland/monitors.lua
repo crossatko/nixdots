@@ -41,10 +41,17 @@ elseif host.is_workstation then
 		mode = "3440x1440@100",
 		position = "0x0",
 		scale = 1.0,
+		-- reserved_area = {
+		-- 	top = 0,
+		-- 	right = 880,
+		-- 	bottom = 0,
+		-- 	left = 0,
+		-- },
 	}
 	monitor2 = {
 		output = "HDMI-A-1",
 		mode = "1920x1200@60",
+		transform = 1,
 		position = "-1200x-300",
 		scale = 1.0,
 	}

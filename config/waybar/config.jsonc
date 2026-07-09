@@ -45,7 +45,7 @@
     "margin-right": 0,
     "include": ["$HOME/.config/waybar/modules.jsonc"],
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["hyprland/window"],
+    "modules-center": [],
     "modules-right": [
       "idle_inhibitor",
       // "custom/weather",

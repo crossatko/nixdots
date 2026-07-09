@@ -66,6 +66,7 @@ elseif is_workstation then
 		no_initial_focus = true,
 		opacity = "1 override 1 override",
 		no_dim = true,
+		rounding = 0,
 		group = "barred",
 		monitor = monitor2.output,
 		move = "0 1245",
