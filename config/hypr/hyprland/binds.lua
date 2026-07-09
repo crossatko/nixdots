@@ -20,8 +20,8 @@ local bind = function(keys, action, opts)
 end
 
 local myPin = function()
-	hl.dispatch(hl.dsp.window.pin({ action = "on" }))
-	hl.dispatch(hl.dsp.window.float({ action = "on" }))
+	hl.dispatch(hl.dsp.window.float({ action = true }))
+	hl.dispatch(hl.dsp.window.pin({ action = true }))
 	hl.dispatch(hl.dsp.window.resize({ x = 866, y = 1416 }))
 	hl.dispatch(hl.dsp.window.move({ x = 2560, y = 12 }))
 end
