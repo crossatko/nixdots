@@ -7,7 +7,9 @@ local monitor1 = {
 	scale = 1.0,
 	bitdepth = 10,
 	vrr = 2,
-	cm = "srgb",
+	-- cm = "dcip3",
+	supports_hdr = 1,
+	supports_wide_color = 1,
 	sdrbrightness = 3,
 	sdrsaturation = 1.2,
 }
@@ -25,6 +27,7 @@ local tv = {
 	mode = "3840x2160@60",
 	position = "2560x720",
 	scale = 1.0,
+	-- vrr = 1,
 }
 
 if host.is_archlinux or host.is_nix_vm then

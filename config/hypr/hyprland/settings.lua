@@ -2,9 +2,9 @@ local theme = require("hyprland.theme")
 
 hl.config({
 	render = {
-		direct_scanout = 0,
+		direct_scanout = 1,
+		send_content_type = 1,
 		cm_auto_hdr = 1,
-		cm_sdr_eotf = "srgb",
 		use_fp16 = true,
 	},
 	ecosystem = {
