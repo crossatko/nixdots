@@ -11,6 +11,9 @@ hl.config({
 		no_donation_nag = true,
 		enforce_permissions = false,
 	},
+	quirks = {
+		prefer_hdr = 1,
+	},
 })
 hl.config({ cursor = { no_warps = true, no_hardware_cursors = true } })
 hl.config({ xwayland = { force_zero_scaling = true } })
